@@ -1,1 +1,0 @@
-#summary Please refer to [http://beagleboard.org [beagleboard.org]] for more details about Beagleboard.
