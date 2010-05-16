@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary Procedure to setup tools like DSPLink and Codec-Engine.
 This wiki-page describes the required setup and tools to get going.
 = Introduction =
 
@@ -59,6 +59,4 @@ It is simple afterward as graphical installation wizard starts and you just have
 After installing all the dependencies, we can now proceed further to install DSP Link.
  
 First, we need to configure the make file. 
-
-
 
