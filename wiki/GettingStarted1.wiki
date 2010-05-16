@@ -6,51 +6,59 @@ Installing DSP/BIOS Link, Code Generation Tools, DSP BIOS, XDC Tools and Codec E
 
 The following tools were used for this project. The download link is also provided.
 
-DSP/BIOS Link 1.64         [http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/DSPLink/1_64/index_FDS.html DSPLink]
+DSP/BIOS Link 1.64         [http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/DSPLink/1_64/index_FDS.html [DSPLink]]
 
-cgt_c6000_7.0.1            [https://www-a.ti.com/downloads/sds_support/CodeGenerationTools.htm#C6000 Code Generation Tools]
+cgt_c6000_7.0.1            [https://www-a.ti.com/downloads/sds_support/CodeGenerationTools.htm#C6000 [Code Generation Tools]]
 
-DSP/BIOS 5.41.00.06        [http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/bios/dspbios/index.html DSP/BIOS]
+DSP/BIOS 5.41.00.06        [http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/bios/dspbios/index.html [DSP/BIOS]]
 
-XDC tools 3.16.00.18       [http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/rtsc/3_16_00_18/index_FDS.html XDC Tools]
+XDC tools 3.16.00.18       [http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/rtsc/3_16_00_18/index_FDS.html [XDC Tools]]
 
-Codec Engine 2.25.02.11    [http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/ce/2_25_02_11/index_FDS.html Codec Engine with cetools]
+Codec Engine 2.25.02.11    [http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/ce/2_25_02_11/index_FDS.html [Codec Engine with cetools]]
 
-All the tools were saved on my Desktop which is at /home/jars/Desktop.
+All the tools were saved on my Desktop  at /home/jars/Desktop.
 = Details =
 Install DSP/BIOS Link
 
-First untar the DSP/BIOS Link (DSP Link) to your working directory. In my case it is /home/jars/Dsp_gsoc, which I will name 'work' for quick reference.
-
- /# mkdir -p work/dsplink
- /# cd work/dsplink
- /# tar -xvzf /home/jars/Desktop/dsplink_linux_1_64.tar.gz
-
+First untar the DSP/BIOS Link (DSP Link) inside a folder in your working directory. In my case it is /home/jars/Dsp_gsoc, which I will name '*work*' for quick reference.
+ {{{
+ # mkdir -p work/dsplink
+ # cd work/dsplink
+ # tar -xvzf /home/jars/Desktop/dsplink_linux_1_64.tar.gz
+ }}}
 Before we can proceed further, we need to install Code Generation Tools, DSP/BIOS and XDC Tools. These comes in binary form and can be directly installed after making them executable.
+ {{{
+ # chmod +x /home/jars/Desktop/ti_cgt_c6000_7.0.1_setup_linux_x86.bin
+ # chmod +x /home/jars/Desktop/bios_setuplinux_5_41_00_06.bin
+ # chmod +x /home/jars/Desktop/xdctools_setuplinux_3_16_00_18.bin
+ }}}
+After making them executable, we can start installing by executing the binaries.
 
- /# chmod +x /home/jars/Desktop/ti_cgt_c6000_7.0.1_setup_linux_x86.bin
- /# chmod +x /home/jars/Desktop/bios_setuplinux_5_41_00_06.bin
- /# chmod +x /home/jars/Desktop/xdctools_setuplinux_3_16_00_18.bin
+Installing Code Generation Tools
 
-After making them executable, we can start installing.
-
- /# /home/jars/Desktop/ti_cgt_c6000_7.0.1_setup_linux_x86.bin
-
+ {{{
+ # /home/jars/Desktop/ti_cgt_c6000_7.0.1_setup_linux_x86.bin
+ }}}
 It is simple afterward as graphical installation wizard starts and you just have to confirm with certain settings and select your installation directory. In my case the installation directory was selected to be 'work/code_gen'.
 
- /# /home/jars/Desktop/bios_setuplinux_5_41_00_06.bin
+Installing DSP/BIOS
 
+ {{{
+ # /home/jars/Desktop/bios_setuplinux_5_41_00_06.bin
+ }}}
 It is simple afterward as graphical installation wizard starts and you just have to confirm with certain settings and select your installation directory. In my case the installation directory was selected to be 'work/bios'.
 
- /# /home/jars/Desktop/xdctools_setuplinux_3_16_00_18.bin
+Installing XDC Tools
 
+ {{{
+ # /home/jars/Desktop/xdctools_setuplinux_3_16_00_18.bin
+ }}}
 It is simple afterward as graphical installation wizard starts and you just have to confirm with certain settings and select your installation directory. In my case the installation directory was selected to be 'work/xdctools'.
 
 
+After installing all the dependencies, we can now proceed further to install DSP Link.
+ 
+First, we need to configure the make file. 
 
 
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
