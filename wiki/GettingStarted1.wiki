@@ -2,7 +2,11 @@
 This wiki-page describes the required setup and tools to get going.
 = Introduction =
 
-Add your content here.
+Installing DSP/BIOS Link, XDC Tools, Code Generation Tools, DSP BIOS and Codec Engine.
+
+The following tools were used for this project. The download link is also provided
+
+DSP/BIOS Link 1.64  [http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/DSPLink/1_64/index_FDS.html DSPLink]
 
 
 = Details =
