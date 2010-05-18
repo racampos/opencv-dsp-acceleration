@@ -16,48 +16,52 @@ XDC tools 3.16.00.18       [http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb
 
 Codec Engine 2.25.02.11    [http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/ce/2_25_02_11/index_FDS.html [Codec Engine with cetools]]
 
-All the tools were saved on my Desktop  at /home/jars/Desktop.
+All the tools were saved on my Desktop  at /home/jars/Desktop. Which will be called *Base_Download_Dir*.
 = Details =
 Install DSP/BIOS Link
 
 First untar the DSP/BIOS Link (DSP Link) inside a folder in your working directory. In my case it is /home/jars/Dsp_gsoc, which I will name '*work*' for quick reference.
  {{{
- # mkdir -p work/dsplink
- # cd work/dsplink
- # tar -xvzf /home/jars/Desktop/dsplink_linux_1_64.tar.gz
+ # mkdir -p <work>/dsplink
+ # cd <work>/dsplink
+ # tar -xvzf <Base_Download_Dir>/dsplink_linux_1_64.tar.gz
  }}}
 Before we can proceed further, we need to install Code Generation Tools, DSP/BIOS and XDC Tools. These comes in binary form and can be directly installed after making them executable.
  {{{
- # chmod +x /home/jars/Desktop/ti_cgt_c6000_7.0.1_setup_linux_x86.bin
- # chmod +x /home/jars/Desktop/bios_setuplinux_5_41_00_06.bin
- # chmod +x /home/jars/Desktop/xdctools_setuplinux_3_16_00_18.bin
+ # chmod +x <Base_Download_Dir>/ti_cgt_c6000_7.0.1_setup_linux_x86.bin
+ # chmod +x <Base_Download_Dir>/bios_setuplinux_5_41_00_06.bin
+ # chmod +x <Base_Download_Dir>/xdctools_setuplinux_3_16_00_18.bin
  }}}
 After making them executable, we can start installing by executing the binaries.
 
 Installing Code Generation Tools
 
  {{{
- # /home/jars/Desktop/ti_cgt_c6000_7.0.1_setup_linux_x86.bin
+ # <Base_Download_Dir>/ti_cgt_c6000_7.0.1_setup_linux_x86.bin
  }}}
 It is simple afterward as graphical installation wizard starts and you just have to confirm with certain settings and select your installation directory. In my case the installation directory was selected to be 'work/code_gen'.
 
 Installing DSP/BIOS
 
  {{{
- # /home/jars/Desktop/bios_setuplinux_5_41_00_06.bin
+ # <Base_Download_Dir>/bios_setuplinux_5_41_00_06.bin
  }}}
 It is simple afterward as graphical installation wizard starts and you just have to confirm with certain settings and select your installation directory. In my case the installation directory was selected to be 'work/bios'.
 
 Installing XDC Tools
 
  {{{
- # /home/jars/Desktop/xdctools_setuplinux_3_16_00_18.bin
+ # <Base_Download_Dir>/xdctools_setuplinux_3_16_00_18.bin
  }}}
 It is simple afterward as graphical installation wizard starts and you just have to confirm with certain settings and select your installation directory. In my case the installation directory was selected to be 'work/xdctools'.
 
 
 After installing all the dependencies, we can now proceed further to install DSP Link.
  
+To start with export the base dsplink path. 
+ {{{
+ # export DSPLINK /home/jars/Dsp_gsoc/dsplink/dsplink_linux_1_64/dsplink
+ }}}
 
 First, we-need to run DSPLink configuration
 
@@ -100,9 +104,9 @@ Next, we need to edit three make files as shown in the message to provide path o
 1) Find omap3530_2.6.mk in the directory $DSPLINK/make/Linux/ by typing # cd $DSPLINK/make/Linux/. Edit this file using VI or Gedit.
 {{{
  .........
- BASE_BUILDOS    := /media/disk/OE/build/tmp-angstrom_2008_1/sysroots/beagleboard-angstrom-linux-gnueabi/kernel
+ BASE_BUILDOS    := <Base_OE_Dir>/build/tmp-angstrom_2008_1/sysroots/beagleboard-angstrom-linux-gnueabi/kernel
  ...........
- BASE_TOOLCHAIN  := /media/disk/OE/build/tmp-angstrom_2008_1/cross/armv7a
+ BASE_TOOLCHAIN  := <Base_OE_Dir>/build/tmp-angstrom_2008_1/cross/armv7a
  ...........
  OSINC_PLATFORM  := $(BASE_TOOLCHAIN)/lib/gcc/arm-angstrom-linux-gnueabi/4.3.3/include
  ..........
@@ -125,9 +129,9 @@ Don't forget to save the changes at the end.
 
  {{{
  .........
- KERNEL_DIR    := /media/disk/OE/build/tmp-angstrom_2008_1/sysroots/beagleboard-angstrom-linux-gnueabi/kernel
+ KERNEL_DIR    := <Base_OE_Dir>/build/tmp-angstrom_2008_1/sysroots/beagleboard-angstrom-linux-gnueabi/kernel
  .........
- TOOL_PATH     := /media/disk/OE/build/tmp-angstrom_2008_1/cross/armv7a/bin
+ TOOL_PATH     := <Base_OE_Dir>/build/tmp-angstrom_2008_1/cross/armv7a/bin
  .........
  CG_PREFIX = arm-angstrom-linux-gnueabi-
  .........
@@ -140,7 +144,7 @@ Again, don't forget to save the changes.
 3) Find c64xxp_5.xx_linux.mk in the directory $DSPLINK/make/DspBios/ by typing # cd $DSPLINK/make/DspBios/. Edit this file using VI or Gedit.
  {{{
  ...........
- BASE_INSTALL    := /home/jars/Dsp_gsoc
+ BASE_INSTALL    := <work>
  ...........
  BASE_SABIOS     := $(BASE_INSTALL)/bios/bios_5_41_00_06
  ...........
@@ -208,11 +212,11 @@ Next, goto $DSPLINK/dsp/src/samples/ and execute following commands to build dsp
 If everything goes well, you are good to test some sample examples. But before that it is suggested to build LPM modules if you are using DSPLink outside the codec-engine. You need LPM module to power-cycle the DSP while switching to different application. It is not required to run the LPM for the first time. Before running different application you need to power off & then on the DSP using lpmOFF.x470uC. and lpmONx470uC. It can be downloaded at http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/lpm/1_24_02_09/. Save the file 'local_power_manager_linux_1_24_02_09.tar.gz' and untar it to the destination directory.
 
  {{{
- # cd <Base_Dir_LPM>
+ # cd <Base_LPM_Dir>
  # tar -xvzf /home/jars/Desktop/local_power_manager_linux_1_24_02_09.tar.gz
  }}}
 
-You need to edit Makefile in the folder mentioned below before starting with building module. I will mention only necessary changes. Rest of the file can be left untouched.
+You need to edit Makefile inside the folder after you do '# cd' as mentioned below before start building the LPM module. I will mention only necessary changes. Rest of the file can be left untouched.
 
  {{{
  # cd  <Base_Dir_LPM>/local_power_manager_linux_1_24_02_09/packages/ti/bios/power/modules/omap3530/lpm
@@ -224,9 +228,9 @@ Note: You can also use vi editer to edit Makefile by typing '#vi Makefile'
 Following changes are to be done inside Makefile.
  {{{
  ...................
- LINUXKERNEL_INSTALL_DIR = /media/disk/OE/build/tmp-angstrom_2008_1/sysroots/beagleboard-angstrom-linux-gnueabi/kernel
- MVTOOL_PREFIX = /media/disk/OE/build/tmp-angstrom_2008_1/cross/armv7a/bin/arm-angstrom-linux-gnueabi-
- DSPLINK_REPO = /home/jars/Dsp_gsoc/dsplink/dsplink_linux_1_64
+ LINUXKERNEL_INSTALL_DIR = <Base_OE_Dir>/build/tmp-angstrom_2008_1/sysroots/beagleboard-angstrom-linux-gnueabi/kernel
+ MVTOOL_PREFIX = <Base_OE_Dir>/build/tmp-angstrom_2008_1/cross/armv7a/bin/arm-angstrom-linux-gnueabi-
+ DSPLINK_REPO = <work>/dsplink/dsplink_linux_1_64
  ..................
  }}}
 
@@ -236,7 +240,24 @@ Finally the LPM module can be built. To build, you need to be in the same direct
  # make 
  }}}
 
-LPM module is now built and you can see it in the same path from where you invoked make command.
+LPM module is now built and you can see it in the same path from where you invoked make command. The binary file needed for LpmOff and LpmOn are provided at 
+ {{{
+ <work>/lpm/local_power_manager_linux_1_24_02_09/packages/ti/bios/power/utils/bin/ti_platforms_evm3530/linux/<debug & release>
+ }}}
+
+Now the time has come to test your work.
+Make a folder called 'dsp' inside '/lib/modules/2.6.32/kernel/drivers/' of your target beagleboard by typing following in your target board command prompt.
+ {{{
+ $ mkdir /lib/modules/2.6.32/kernel/drivers/dsp
+ }}}
+
+First copy your dsplinkk.ko and lpm_omap3530.ko modules to your target board. If your board is NFS mount, it is just matter of copying these files from respective path to the 
+<Board_Target_Dir>/lib/modules/2.6.32/kernel/drivers/dsp/. If not, you can copy these in the particular folder mentioned above in your mmc card.
+ {{{
+ # cp <work>/lpm/local_power_manager_linux_1_24_02_09/packages/ti/bios/power/modules/omap3530/lpm/lpm_omap3530.ko <Board_Target_Dir>/lib/modules/2.6.32/kernel/drivers/dsp/
+ #cp $DSPLINK/gpp/export/BIN/Linux/OMAP3530/<DEBUG or RELEASE>/dsplinkk.ko <Board_Target_Dir>/lib/modules/2.6.32/kernel/drivers/dsp/
+ }}}
+
 
 
 Error while building codec-engine server if you have specified some other destination directory directory while building dsplink.
