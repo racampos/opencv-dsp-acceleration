@@ -58,5 +58,168 @@ It is simple afterward as graphical installation wizard starts and you just have
 
 After installing all the dependencies, we can now proceed further to install DSP Link.
  
-First, we need to configure the make file. 
 
+First, we-need to run DSPLink configuration
+
+ {{{
+ # cd <DSPLink_Base_Dir>/dsplink/config/bin
+ #  perl dsplinkcfg.pl --platform=OMAP3530 --nodsp=1  --dspcfg_0=OMAP3530SHMEM     --dspos_0=DSPBIOS5XX --gppos=OMAPLSP --comps=ponslrmc --trace=1 --legacy=1 --DspTskMode=1
+ Note: We can also give seperate destination for build sources by providing options '--gpp_temp=<path_of_dir_our_choice> --dsp0_temp=<path_of_dir_of_our_choice>'. But this  can give trouble later when building codec-engine-server examples. The error is shown in the build procedure for codec-engine exaples.
+
+ Successful configuration will give message like this at the end.
+
+ =========================================================
+
+Configuration done successfully!!
+Generating CURRENTCFG.MK file...
+Generating multimake script...
+Generating CFG_system.c File...
+Generating GPP RTSC xdc file...
+Generating DSP RTSC xdc file...
+=========================================================
+Please edit the following files for toolchains, kernel sources, etc changes.
+GPP side distribution file: $DSPLINK/make/Linux/omap3530_2.6.mk
+GPP side distribution file: $DSPLINK/gpp/src/Rules.mk
+DSP side distribution file: $DSPLINK/make/DspBios/c64xxp_5.xx_linux.mk
+==========================================================
+Users consuming DSPLINK as XDC package, Need to do the following.
+cd into the $(DSPLINK)/dsp directory and run: 
+ $(XDC_INSTALL_DIR)/xdc clean 
+ $(XDC_INSTALL_DIR)/xdc .interfaces 
+cd into the $(DSPLINK)/gpp directory and run: 
+ $(XDC_INSTALL_DIR)/xdc clean 
+ $(XDC_INSTALL_DIR)/xdc .interfaces 
+==========================================================
+
+ }}} 
+
+As said in the message if you are using DSPLink for XDC package. Execute those four instruction.
+
+Next, we need to edit three make files as shown in the message to provide path of various tools. I will mention only necessary changes to be done on the make files. Rest can be left untouched. Please find the respective line in the make file mentioned below.
+
+1) Find omap3530_2.6.mk in the directory $DSPLINK/make/Linux/ by typing # cd $DSPLINK/make/Linux/. Edit this file using VI or Gedit.
+{{{
+ .........
+ BASE_BUILDOS    := /media/disk/OE/build/tmp-angstrom_2008_1/sysroots/beagleboard-angstrom-linux-gnueabi/kernel
+ ...........
+ BASE_TOOLCHAIN  := /media/disk/OE/build/tmp-angstrom_2008_1/cross/armv7a
+ ...........
+ OSINC_PLATFORM  := $(BASE_TOOLCHAIN)/lib/gcc/arm-angstrom-linux-gnueabi/4.3.3/include
+ ..........
+ COMPILER        := $(BASE_CGTOOLS)/arm-angstrom-linux-gnueabi-gcc
+ ..........
+ LD              := $(BASE_CGTOOLS)/arm-angstrom-linux-gnueabi-ld
+ ..........
+ CROSS_COMPILE   := arm-angstrom-linux-gnueabi-
+ ..........
+ ARCHIVER        := $(BASE_CGTOOLS)/arm-angstrom-linux-gnueabi-ar
+ .......... 
+ LINKER      := $(BASE_CGTOOLS)/arm-angstrom-linux-gnueabi-gcc
+ .........
+ 
+}}}
+
+Don't forget to save the changes at the end.
+
+2) Find Rules.mk in the directory $DSPLINK/gpp/src/ by typing # cd $DSPLINK/gpp/src/. Edit this file using VI or Gedit.
+
+ {{{
+ .........
+ KERNEL_DIR    := /media/disk/OE/build/tmp-angstrom_2008_1/sysroots/beagleboard-angstrom-linux-gnueabi/kernel
+ .........
+ TOOL_PATH     := /media/disk/OE/build/tmp-angstrom_2008_1/cross/armv7a/bin
+ .........
+ CG_PREFIX = arm-angstrom-linux-gnueabi-
+ .........
+ MAKE_OPTS = ARCH=arm CROSS_COMPILE=$(TOOL_PATH)/arm-angstrom-linux-gnueabi-
+ ........
+
+ }}}
+Again, don't forget to save the changes.
+
+3) Find c64xxp_5.xx_linux.mk in the directory $DSPLINK/make/DspBios/ by typing # cd $DSPLINK/make/DspBios/. Edit this file using VI or Gedit.
+ {{{
+ ...........
+ BASE_INSTALL    := /home/jars/Dsp_gsoc
+ ...........
+ BASE_SABIOS     := $(BASE_INSTALL)/bios/bios_5_41_00_06
+ ...........
+ XDCTOOLS_DIR    := $(BASE_INSTALL)/xdctools_3_16_00_18
+ ............
+ BASE_CGTOOLS    := $(BASE_INSTALL)/code_gen
+ ............
+  
+ }}}
+
+That's all. You are done with editing and its time to make it work.
+
+Now, goto $DSPLINK/gpp/src/api/ and execute following commands.
+
+ {{{
+ # cd $DSPLINK/gpp/src/api/
+ # make -s clean
+ # make -s debug
+ # make -s release
+ Or you can do 'make -s' to build both debug and release version.
+ }}}
+
+Next, goto $DSPLINK/gpp/src/ and execute following commands which builds OMAP3530 loadable module.
+ {{{
+ # cd $DSPLINK/gpp/src/
+ # make -s clean
+ # make -s debug
+ # make -s release
+ Or you can do 'make -s' to build both debug and release version.
+ }}}
+
+Next, goto $DSPLINK/gpp/src/samples/ and execute following commands to build GPP side sample examples.
+
+ {{{
+ # cd $DSPLINK/gpp/src/samples/
+ # make -s clean
+ # make -s debug
+ # make -s release
+ Or you can do 'make -s' to build both debug and release version.
+ 
+ }}}
+
+Next, goto $DSPLINK/dsp/src/ and execute following commands to build dsp libraries.
+
+ {{{
+ # cd $DSPLINK/dsp/src/
+ # make -s clean
+ # make -s debug
+ # make -s release
+ Or you can do 'make -s' to build both debug and release version.
+ 
+ }}}
+
+Next, goto $DSPLINK/dsp/src/samples/ and execute following commands to build dsp side sample examples.
+
+ {{{
+ # cd $DSPLINK/dsp/src/
+ # make -s clean
+ # make -s debug
+ # make -s release
+ Or you can do 'make -s' to build both debug and release version.
+ 
+ }}}
+
+If everything goes well, you are good to test some sample examples. 
+
+
+
+
+Error while building codec-engine server if you have specified some other destination directory directory while building dsplink.
+js: "/home/jars/Dsp_gsoc/xdctools_3_16_00_18/packages/xdc/cfg/Main.xs", line 40: XDC runtime error: can't find the library 'export/BIN/DspBios/OMAP3530/OMAP3530_0/RELEASE/dsplink.lib' specified by package dsplink.dsp. It wasn't found along the path '/home/jars/Dsp_gsoc/codec_engine_n_tools/codec_engine_2_25_02_11/examples/ti/sdo/ce/examples/servers/all_codecs/../../../../../..;/home/jars/Dsp_gsoc/codec_engine_n_tools/codec_engine_2_25_02_11/cetools/packages;/home/jars/Dsp_gsoc/codec_engine_n_tools/codec_engine_2_25_02_11/packages;/home/jars/Dsp_gsoc/bios/bios_5_41_00_06/packages;/home/jars/Dsp_gsoc/dsplink/dsplink_linux_1_64;/home/jars/Dsp_gsoc/xdctools_3_16_00_18/packages;../../../../../..;'.
+gmake[1]: *** [package/cfg/bin/ti_platforms_evm3530/all_x64Pcfg_c.c] Error 1
+gmake[1]: *** Deleting file `package/cfg/bin/ti_platforms_evm3530/all_x64Pcfg_c.c'
+gmake[1]: *** [package/cfg/bin/ti_platforms_evm3530/all_x64Pcfg_c.c] Deleting file `package/cfg/bin/ti_platforms_evm3530/all_x64P.xdl'
+gmake[1]: *** [package/cfg/bin/ti_platforms_evm3530/all_x64Pcfg_c.c] Deleting file `package/cfg/bin/ti_platforms_evm3530/all_x64P.h'
+gmake[1]: *** [package/cfg/bin/ti_platforms_evm3530/all_x64Pcfg_c.c] Deleting file `package/cfg/bin/ti_platforms_evm3530/all_x64P.c'
+gmake[1]: *** [package/cfg/bin/ti_platforms_evm3530/all_x64Pcfg_c.c] Deleting file `package/cfg/bin/ti_platforms_evm3530/all_x64Pcfg.cmd'
+gmake[1]: *** [package/cfg/bin/ti_platforms_evm3530/all_x64Pcfg_c.c] Deleting file `package/cfg/bin/ti_platforms_evm3530/all_x64Pcfg.s62'
+gmake: *** [/home/jars/Dsp_gsoc/codec_engine_n_tools/codec_engine_2_25_02_11/examples/ti/sdo/ce/examples/servers/all_codecs,.executables] Error 2
+make[1]: *** [all] Error 2
+make[1]: Leaving directory `/home/jars/Dsp_gsoc/codec_engine_n_tools/codec_engine_2_25_02_11/examples/ti/sdo/ce/examples/servers/all_codecs'
+make: *** [all] Error 2
