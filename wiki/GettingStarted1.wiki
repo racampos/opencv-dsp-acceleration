@@ -194,7 +194,7 @@ Next, goto $DSPLINK/dsp/src/ and execute following commands to build dsp librari
  
  }}}
 
-Next, goto $DSPLINK/dsp/src/samples/ and execute following commands to build dsp side sample examples.
+Next, goto $DSPLINK/dsp/src/samples/ and execute following commands to build dsp side sample examples. Examples will be save at '$DSPLINK/dsp/export/BIN/DspBios/OMAP3530/OMAP3530_0/<RELEASE & DEBUG>/ with .out extension.
 
  {{{
  # cd $DSPLINK/dsp/src/
@@ -205,9 +205,38 @@ Next, goto $DSPLINK/dsp/src/samples/ and execute following commands to build dsp
  
  }}}
 
-If everything goes well, you are good to test some sample examples. 
+If everything goes well, you are good to test some sample examples. But before that it is suggested to build LPM modules if you are using DSPLink outside the codec-engine. You need LPM module to power-cycle the DSP while switching to different application. It is not required to run the LPM for the first time. Before running different application you need to power off & then on the DSP using lpmOFF.x470uC. and lpmONx470uC. It can be downloaded at http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/lpm/1_24_02_09/. Save the file 'local_power_manager_linux_1_24_02_09.tar.gz' and untar it to the destination directory.
 
+ {{{
+ # cd <Base_Dir_LPM>
+ # tar -xvzf /home/jars/Desktop/local_power_manager_linux_1_24_02_09.tar.gz
+ }}}
 
+You need to edit Makefile in the folder mentioned below before starting with building module. I will mention only necessary changes. Rest of the file can be left untouched.
+
+ {{{
+ # cd  <Base_Dir_LPM>/local_power_manager_linux_1_24_02_09/packages/ti/bios/power/modules/omap3530/lpm
+ #gedit Makefile     
+
+Note: You can also use vi editer to edit Makefile by typing '#vi Makefile'
+ }}}
+
+Following changes are to be done inside Makefile.
+ {{{
+ ...................
+ LINUXKERNEL_INSTALL_DIR = /media/disk/OE/build/tmp-angstrom_2008_1/sysroots/beagleboard-angstrom-linux-gnueabi/kernel
+ MVTOOL_PREFIX = /media/disk/OE/build/tmp-angstrom_2008_1/cross/armv7a/bin/arm-angstrom-linux-gnueabi-
+ DSPLINK_REPO = /home/jars/Dsp_gsoc/dsplink/dsplink_linux_1_64
+ ..................
+ }}}
+
+Finally the LPM module can be built. To build, you need to be in the same directory where the Makefile is.
+
+ {{{
+ # make 
+ }}}
+
+LPM module is now built and you can see it in the same path from where you invoked make command.
 
 
 Error while building codec-engine server if you have specified some other destination directory directory while building dsplink.
