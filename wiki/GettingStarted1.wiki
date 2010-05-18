@@ -151,7 +151,7 @@ Again, don't forget to save the changes.
   
  }}}
 
-That's all. You are done with editing and its time to make it work.
+That's all. You are done with editing and its time to make it work. But, before that make sure that you have saved all the changes.
 
 Now, goto $DSPLINK/gpp/src/api/ and execute following commands.
 
@@ -163,7 +163,7 @@ Now, goto $DSPLINK/gpp/src/api/ and execute following commands.
  Or you can do 'make -s' to build both debug and release version.
  }}}
 
-Next, goto $DSPLINK/gpp/src/ and execute following commands which builds OMAP3530 loadable module.
+Next, goto $DSPLINK/gpp/src/ and execute following commands which builds OMAP3530 loadable module. The module 'dsplinkk.ko' will be save at '$DSPLINK/gpp/export/BIN/Linux/OMAP3530/<RELEASE & DEBUG>/
  {{{
  # cd $DSPLINK/gpp/src/
  # make -s clean
@@ -172,7 +172,7 @@ Next, goto $DSPLINK/gpp/src/ and execute following commands which builds OMAP353
  Or you can do 'make -s' to build both debug and release version.
  }}}
 
-Next, goto $DSPLINK/gpp/src/samples/ and execute following commands to build GPP side sample examples.
+Next, goto $DSPLINK/gpp/src/samples/ and execute following commands to build GPP side sample examples. The all GPP side executables will be save at '$DSPLINK/gpp/export/BIN/Linux/OMAP3530/<RELEASE & DEBUG>/
 
  {{{
  # cd $DSPLINK/gpp/src/samples/
