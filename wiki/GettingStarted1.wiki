@@ -540,9 +540,23 @@ Note: Few things should be noted and take care of before executing the examples.
 If everything goes well, you will be able to see following results at your screen.
 
  {{{
- 
+ @0x000c5a79:[T:0x4001df90] ZZ - main> Welcome to app's main().
+@0x000c63c5:[T:0x4001df90] ZZ - App-> Application started.
+@0x000d052e:[T:0x4001df90] ZZ - App-> Processing frame 0...
+@0x000d067e:[T:0x4001df90] ZZ - App-> Encoder frame 0 process returned - 0x0)
+@0x000d0753:[T:0x4001df90] ZZ - App-> Decoder frame 0 process returned - 0x0)
+@0x000d0847:[T:0x4001df90] ZZ - App-> Processing frame 1...
+@0x000d093b:[T:0x4001df90] ZZ - App-> Encoder frame 1 process returned - 0x0)
+@0x000d0a11:[T:0x4001df90] ZZ - App-> Decoder frame 1 process returned - 0x0)
+............................................................................
+............................................................................
+@0x0031faf1:[T:0x4001df90] ZZ - App-> Processing frame 127...
+@0x0031fbe5:[T:0x4001df90] ZZ - App-> Encoder frame 127 process returned - 0x0)
+@0x0031fcd9:[T:0x4001df90] ZZ - App-> Decoder frame 127 process returned - 0x0)
+@0x0031fd71:[T:0x4001df90] ZZ - 128 frames encoded/decoded
+@0x003274a7:[T:0x4001df90] ZZ - app done.
+root@beagleboard:/media/pramod/dsplink#
  }}}
-
 
 
 For more information you can also refer to
