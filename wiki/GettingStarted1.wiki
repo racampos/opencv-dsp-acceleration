@@ -67,8 +67,9 @@ First, we-need to run DSPLink configuration
 
  {{{
  # cd <DSPLink_Base_Dir>/dsplink/config/bin
- #  perl dsplinkcfg.pl --platform=OMAP3530 --nodsp=1  --dspcfg_0=OMAP3530SHMEM     --dspos_0=DSPBIOS5XX --gppos=OMAPLSP --comps=ponslrmc --trace=1 --legacy=1 --DspTskMode=1
- Note: We can also give seperate destination for build sources by providing options '--gpp_temp=<path_of_dir_our_choice> --dsp0_temp=<path_of_dir_of_our_choice>'. But this  can give trouble later when building codec-engine-server examples. The error is shown in the build procedure for codec-engine exaples.
+ #  perl dsplinkcfg.pl --platform=OMAP3530 --nodsp=1  --dspcfg_0=OMAP3530SHMEM     --dspos_0=DSPBIOS5XX --gppos=OMAPLSP --comps=ponslrmc --DspTskMode=1
+
+ Note: We can also give seperate destination for build libraries and executables by providing options '--gpp_temp=<path_of_dir_our_choice> --dsp0_temp=<path_of_dir_of_our_choice>'. But this  can give trouble later when building codec-engine-server examples. The error is shown in the build procedure for codec-engine examples.
 
  Successful configuration will give message like this at the end.
 
@@ -230,7 +231,7 @@ Next, goto $DSPLINK/dsp/src/samples/ and execute following commands to build dsp
 
 ===Missing something! LPM??===
 
-If everything goes well, you are good to test some sample examples. But before that it is suggested to build LPM modules if you are using DSPLink outside the codec-engine. You need LPM module to power-cycle the DSP while switching to different application. It is not required to run the LPM for the first time. Before running different application you need to power off & then on the DSP using lpmOFF.x470uC. and lpmONx470uC. It can be downloaded at http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/lpm/1_24_02_09/. Save the file 'local_power_manager_linux_1_24_02_09.tar.gz' and untar it to the destination directory.
+If everything goes well, you are good to test some sample examples. But before that it is suggested to build LPM modules if you are using DSPLink outside the codec-engine. You need LPM module to power-cycle the DSP while switching to different application. It is not required to run the LPM for the first time. Before running different application you need to power off & then on the DSP using lpmOFF.x470uC. and lpmONx470uC. LPM package can be downloaded at http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/lpm/1_24_02_09/. Save the file 'local_power_manager_linux_1_24_02_09.tar.gz' and untar it to the destination directory.
 
  {{{
  # cd <Base_LPM_Dir>
@@ -289,7 +290,7 @@ First copy your dsplinkk.ko and lpm_omap3530.ko modules to your target board. If
  # cp <work>/lpm/local_power_manager_linux_1_24_02_09/packages/ti/bios/power/utils/bin/ti_platforms_evm3530/linux/lpmON.x470uC <Board_Target_Mount>/usr/bin
  }}}
 
-To make things easy, script to load and unload these recently built modules is already provided to us at {{{ <work>/lpm/local_power_manager_linux_1_24_02_09/packages/ti/bios/power/modules/omap3530/}}}. First create a folder in your target beagleboard filesystem where you want to preserve all your work related to DSPLink. Let's name this folder as *{{{<Target_work>}}}*. Now there is a little editing you need to do in file 'loadmodule.sh' before you copy them. Specify the correct path of your modules by editing the lines in the files as hown below.
+To make things easy, script to load and unload these recently built modules is already provided to us at {{{ <work>/lpm/local_power_manager_linux_1_24_02_09/packages/ti/bios/power/modules/omap3530/}}}. First create a folder in your target beagleboard filesystem where you want to preserve all your work related to DSPLink. Let's name this folder as *{{{<Target_work>}}}*. Now there is a little editing you need to do in file 'loadmodule.sh' before you copy them. Specify the correct path of your modules by editing the lines in the file loadmodule.sh as hown below.
 
  {{{
  ...........
@@ -302,7 +303,7 @@ To make things easy, script to load and unload these recently built modules is a
  }}}
 
 
-Now copy these files inside this folder.
+Now copy these files inside your target work folder in beagleboard.
 
  {{{
  # cp <work>/lpm/local_power_manager_linux_1_24_02_09/packages/ti/bios/power/modules/omap3530/loadmodules.sh <Board_Target_Mount>/<Target_work>/
@@ -311,6 +312,23 @@ Now copy these files inside this folder.
 
 Now copy the sample examples to the board files system. You can copy as many samples as you want to test but I will mention here about only one.
 
+ {{{
+ # cp $DSPLINK/gpp/export/BIN/Linux/OMAP3530/<DEBUG or RELEASE>/loopgpp <Board_Target_Mount>/<Target_work>
+ # cp $DSPLINK/dsp/export/BIN/DspBios/OMAP3530/OMAP3530_0/<DEBUG or RELEASE>/loop.out <Board_Target_Mount>/<Target_work>
+ }}
+
+===Running DSPLink Sample application===
+
+Switch to your target platform(Beagleboard) and in the command prompt type following
+
+ {{{
+ $ cd <target_work>
+ $ ./loadmodules.sh
+ $ ./loopgpp loop.out 256 5
+
+ }}}
+
+That is all. If have successfully ran a sample
 
 
 Error while building codec-engine server if you have specified some other destination directory directory while building dsplink.
