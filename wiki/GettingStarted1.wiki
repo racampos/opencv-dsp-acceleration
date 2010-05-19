@@ -331,7 +331,7 @@ Switch to your target platform(Beagleboard) and in the command prompt type follo
 That is all. If you did not have any build error in-between you should be able to see output similar to below.
 
  {{{
-     {{{
+     
      root@beagleboard:/media/pramod/dsplink# ./loopgpp loop.out 256 5
 =============== Sample Application : LOOP ==========
 ==== Executing sample for DSP processor Id 0 ====
@@ -344,7 +344,7 @@ Leaving LOOP_Delete ()
 ====================================================
 root@beagleboard:/media/pramod/dsplink#
  
-     }}}
+     
  }}}
 
 
