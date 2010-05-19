@@ -293,6 +293,7 @@ First copy your dsplinkk.ko and lpm_omap3530.ko modules to your target board. If
 To make things easy, script to load and unload these recently built modules is already provided to us at {{{ <work>/lpm/local_power_manager_linux_1_24_02_09/packages/ti/bios/power/modules/omap3530/}}}. First create a folder in your target beagleboard filesystem where you want to preserve all your work related to DSPLink. Let's name this folder as *{{{<Target_work>}}}*. Now there is a little editing you need to do in file 'loadmodule.sh' before you copy them. Specify the correct path of your modules by editing the lines in the file loadmodule.sh as hown below.
 
  {{{
+ #!/bin/sh
  ...........
  ...........
  insmod /lib/modules/2.6.32/kernel/drivers/dsp/dsplinkk.ko
@@ -300,6 +301,13 @@ To make things easy, script to load and unload these recently built modules is a
  ...........
  insmod /lib/modules/2.6.32/kernel/drivers/dsp/lpm_omap3530.ko
 
+ }}}
+
+Also, you need to change the first line of unloadmodules.sh
+ {{{
+ #!/bin/sh
+ ...........
+ ...........
  }}}
 
 
