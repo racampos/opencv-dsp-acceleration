@@ -3,7 +3,7 @@ This wiki-page describes the required setup for installing and building DSPLink 
 
 = Introduction =
 
-Installing DSP/BIOS Link, Code Generation Tools, DSP BIOS, XDC Tools and Codec Engine.
+Installing DSP/BIOS Link, Code Generation Tools, DSP BIOS, XDC Tools, LPM, CMEM and Codec Engine.
 
 The following tools were used for this project. The download link is also provided.
 
@@ -232,11 +232,11 @@ Next, goto $DSPLINK/dsp/src/samples/ and execute following commands to build dsp
 
 ===Missing something! LPM??===
 
-If everything goes well, you are good to test some sample examples. But before that it is suggested to build LPM modules if you are using DSPLink outside the codec-engine. You need LPM module to power-cycle the DSP while switching to different application. It is not required to run the LPM for the first time. Before running different application you need to power off & then on the DSP using lpmOFF.x470uC. and lpmONx470uC. LPM package can be downloaded at http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/lpm/1_24_02_09/. Save the file 'local_power_manager_linux_1_24_02_09.tar.gz' and untar it to the destination directory.
+If everything goes well, you are good to test some sample examples. But before that it is suggested to build LPM modules if you are using DSPLink outside the codec-engine. You need LPM module to power-cycle the DSP while switching between different applications. It is not required to run the LPM for the first time. Before running different application you need to power off & then on the DSP using lpmOFF.x470uC. and lpmONx470uC. If you don't, the DSP does not function properly. LPM package can be downloaded at http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/lpm/1_24_02_09/. Save the file 'local_power_manager_linux_1_24_02_09.tar.gz' and untar it to the destination directory.
 
  {{{
  # cd <Base_LPM_Dir>
- # tar -xvzf /home/jars/Desktop/local_power_manager_linux_1_24_02_09.tar.gz
+ # tar -xvzf <Base_Download_Dir>/local_power_manager_linux_1_24_02_09.tar.gz
  }}}
 
 You need to edit Makefile inside the folder after you do '# cd' as mentioned below before start building the LPM module. I will mention only necessary changes. Rest of the file can be left untouched.
@@ -359,6 +359,112 @@ root@beagleboard:/media/pramod/dsplink#
  
      
  }}}
+
+For more information you can also refer to,
+
+[1] http://processors.wiki.ti.com/index.php/Building_DSPLink
+[2] http://ossie.wireless.vt.edu/trac/wiki/BeagleBoard_DSPLink
+
+
+=Building CMEM module=
+
+CMEM module is used to assign continious memroy from the user space.
+
+CMEM package comes along with Codec-Engine and tools. You can find it at {{{ <work>/codec_engine_n_tools/codec_engine_2_25_02_11/cetools/packages/ti/sdo/linuxutils/cmem }}}. If you are not using codec-engine then you can download it from http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/linuxutils/index.html.CMEM comes inside Linux-Utils package.Save it and untar it to your 
+{{{<work>}}} folder.
+
+ {{{
+ # cd <work>
+ # mkdir linux_util
+ # cd linux_util
+ # tar -xvzf <Base_Download_Dir>/linuxutils_2_25_02_08.tar.gz
+ }}}
+
+If using codec-engine 
+
+ {{{
+ # cd <work>/codec_engine_n_tools/codec_engine_2_25_02_11/cetools/packages/ti/sdo/linuxutils/cmem/
+ }}}
+
+Else,
+
+ {{{
+ # cd <work>/linux_util/linuxutils_2_25_02_08/packages/ti/sdo/linuxutils/cmem
+ }}}
+
+Now, edit the Rules.make file. The only necessary changes to be done is shown below.
+ {{{
+ ...........
+ ...........
+ #If you are using codec-engine un-comment the line below and comment out the line next to it.
+ #EXEC_DIR=<work>/codec_engine_n_tools/codec_engine_2_25_02_11/cetools/packages/ti/sdo/linuxutils/cmem
+ EXEC_DIR=<work>/linux_util/linuxutils_2_25_02_08/packages/ti/sdo/linuxutils/cmem
+ ...........
+ ...........
+ MVTOOL_PREFIX=<OE_Base_Dir>/build/tmp-angstrom_2008_1/cross/armv7a/bin/arm-angstrom-linux-gnueabi-
+ ...........
+ ...........
+ #You need to comment the line below
+ #UCTOOL_PREFIX=/db/toolsrc/library/vendors2005/opensource/buildroot/10122007/build_arm/staging_dir/usr/bin/arm-linux-
+ ...........
+ ...........
+ LINUXKERNEL_INSTALL_DIR=<OE_Base_Dir>/build/tmp-angstrom_2008_1/sysroots/beagleboard-angstrom-linux-gnueabi/kernel
+ ...........
+ ...........
+ }}}
+
+Run the following commands
+ {{{
+ # make 
+ # make install
+ }}}
+
+The freshly built module cmemk.ko will be present at the folder {{{<work>/linux_util/linuxutils_2_25_02_08/packages/ti/sdo/linuxutils/cmem/}}}. Copy it to the folder {{{<Board_Target_Mount>/lib/modules/2.6.32/kernel/drivers/dsp/}} and test it using following command
+ {{{
+ # cp cmemk.ko <Board_Target_Mount>/lib/modules/2.6.32/kernel/drivers/dsp/}
+ # insmod /lib/modules/2.6.32/kernel/drivers/dsp/cmemk.ko pools=1x1000000 phys_start=0x85000000 phys_end=0x86000000
+ }}}
+
+If you see no error message, you have successfully tested it.
+
+=Building Codec-Engine and Examples=
+
+To start building codec-engine examples you need to edit xdcpaths.mak file found in folder {{{<work>/codec_engine_n_tools/codec_engine_2_25_02_11/examples}}}. The necessary changes is shown below. The xdcpaths.mak file is well commented and modification is very easy.
+
+ {{{
+ ........
+ ........
+ DEVICES  := OMAP3530
+ .......
+ .......
+ GPPOS := LINUX_GCC
+ .......
+ .......
+ PROGRAMS := APP_CLIENT DSP_SERVER
+ .......
+ .......
+ CE_INSTALL_DIR        := <work>/codec_engine_n_tools/codec_engine_2_25_02_11
+ XDC_INSTALL_DIR       := <work>/xdctools_3_16_00_18
+ BIOS_INSTALL_DIR      := <work>/bios/bios_5_41_00_06
+ DSPLINK_INSTALL_DIR   := <work>/dsplink/dsplink_linux_1_64
+ .......
+ .......
+ CGTOOLS_V5T := <OE_Base_Dir>/build/tmp-angstrom_2008_1/cross/armv7a
+ CC_V5T := bin/arm-angstrom-linux-gnueabi-gcc
+ #You can leave the line below as it is in the xdcpaths.mak file.
+ CGTARGET := gnu.targets.arm.GCArmv5T
+ .......
+ .......
+ CGTOOLS_C64P := /home/jars/Dsp_gsoc/code_gen
+ .......
+ .......
+ .......
+ .......
+ .......
+ .......
+ 
+ }}}
+
 
 
 Error while building codec-engine server if you have specified some other destination directory directory while building dsplink.
