@@ -419,7 +419,7 @@ Run the following commands
  # make install
  }}}
 
-The freshly built module cmemk.ko will be present at the folder {{{<work>/linux_util/linuxutils_2_25_02_08/packages/ti/sdo/linuxutils/cmem/}}}. Copy it to the folder {{{<Board_Target_Mount>/lib/modules/2.6.32/kernel/drivers/dsp/}} and test it using following command
+The freshly built module cmemk.ko will be present at the folder {{{<work>/linux_util/linuxutils_2_25_02_08/packages/ti/sdo/linuxutils/cmem/}}}. Copy it to the folder {{{<Board_Target_Mount>/lib/modules/2.6.32/kernel/drivers/dsp/}}} and test it using following command
  {{{
  # cp cmemk.ko <Board_Target_Mount>/lib/modules/2.6.32/kernel/drivers/dsp/}
  # insmod /lib/modules/2.6.32/kernel/drivers/dsp/cmemk.ko pools=1x1000000 phys_start=0x85000000 phys_end=0x86000000
@@ -482,7 +482,7 @@ Goto {{{<work>/codec_engine_n_tools/codec_engine_2_25_02_11/examples/ti/sdo/ce/e
  # make
  }}}
 
-Note: This is the place I had mentioned earlier while configuring DSPLink. If you had given --gpp_temp=<path_of_dir_our_choice> --dsp0_temp=<path_of_dir_of_our_choice> while configuring DSPLink, you may get error similar as shown below. There should be way to way to rectify it, but I did not bother much and rather opted easier path. 
+Note: This is the place I had mentioned earlier while configuring DSPLink. If you had given {{{--gpp_temp=<path_of_dir_our_choice> --dsp0_temp=<path_of_dir_of_our_choice>}}} while configuring DSPLink, you may get error similar as shown below. There should be way to way to rectify it, but I did not bother much and rather opted easier path. 
 
  {{{
  Error while building codec-engine server if you have specified some other destination directory directory while building dsplink.
@@ -514,7 +514,7 @@ Goto {{{<work>/codec_engine_n_tools/codec_engine_2_25_02_11/examples/ti/sdo/ce/e
  # cp app_remote.xv5T <Board_Target_Mount>/<Target_work>
  }}}
 
-Copy the input file in.dat from {{{<work>/codec_engine_n_tools/codec_engine_2_25_02_11/examples/ti/sdo/ce/examples/apps/audio_copy/}} to your target directory in your Beagleboard.
+Copy the input file in.dat from {{{<work>/codec_engine_n_tools/codec_engine_2_25_02_11/examples/ti/sdo/ce/examples/apps/audio_copy/}}} to your target directory in your Beagleboard.
  {{{
  # cp <work>/codec_engine_n_tools/codec_engine_2_25_02_11/examples/ti/sdo/ce/examples/apps/audio_copy/in.dat <Board_Target_Mount>/<Target_work>
  }}}
@@ -560,4 +560,4 @@ root@beagleboard:/media/pramod/dsplink#
 
 
 For more information you can also refer to
-[1]<work>/codec_engine_n_tools/codec_engine_2_25_02_11/examples/build_instructions.html
+[1] {{{<work>/codec_engine_n_tools/codec_engine_2_25_02_11/examples/build_instructions.html}}}
