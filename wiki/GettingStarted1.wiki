@@ -1,5 +1,6 @@
 #summary Procedure to setup tools like DSPLink and Codec-Engine.
-This wiki-page describes the required setup and tools to get going.
+This wiki-page describes the required setup for installing and building DSPLink and Codec-Engine.
+
 = Introduction =
 
 Installing DSP/BIOS Link, Code Generation Tools, DSP BIOS, XDC Tools and Codec Engine.
@@ -17,7 +18,7 @@ XDC tools 3.16.00.18       [http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb
 Codec Engine 2.25.02.11    [http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/ce/2_25_02_11/index_FDS.html [Codec Engine with cetools]]
 
 All the tools were saved on my Desktop  at /home/jars/Desktop. Which will be called {{{<Base_Download_Dir>}}}.
-= Details =
+
 ==Install DSP/BIOS Link==
 
 First untar the DSP/BIOS Link (DSP Link) inside a folder in your working directory. In my case it is /home/jars/Dsp_gsoc, which I will name '{{{<work>}}}' for quick reference.
@@ -336,7 +337,11 @@ Switch to your target platform(Beagleboard) and in the command prompt type follo
 
  }}}
 
-That is all. If you did not have any build error in-between you should be able to see output similar to below.
+That is all will DSPLink. If you did not have any build error in-between you should be able to see output similar to the one shown below. If you want to test some other examples, don't forget to run commands below before you start executing.
+
+ {{{
+ $ lpmOFF.x470uC
+ $ lpmON.x470uC
 
  {{{
      
