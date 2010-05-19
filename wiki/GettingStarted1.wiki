@@ -458,16 +458,34 @@ To start building codec-engine examples you need to edit xdcpaths.mak file found
  CGTOOLS_C64P := /home/jars/Dsp_gsoc/code_gen
  .......
  .......
- .......
- .......
- .......
- .......
- 
  }}}
 
+Goto {{{<work>/codec_engine_n_tools/codec_engine_2_25_02_11/examples/ti/sdo/ce/examples/codecs/}}} and type the following commands to build codec examples.
+ {{{
+ # cd <work>/codec_engine_n_tools/codec_engine_2_25_02_11/examples/ti/sdo/ce/examples/codecs/
+ # make clean
+ # make
+ }}}
 
+Goto {{{<work>/codec_engine_n_tools/codec_engine_2_25_02_11/examples/ti/sdo/ce/examples/extensions/}}} and type the following commands to build extensions examples.
+ {{{
+ # cd <work>/codec_engine_n_tools/codec_engine_2_25_02_11/examples/ti/sdo/ce/examples/extensions/
+ # make clean
+ # make
+ }}}
 
-Error while building codec-engine server if you have specified some other destination directory directory while building dsplink.
+Goto {{{<work>/codec_engine_n_tools/codec_engine_2_25_02_11/examples/ti/sdo/ce/examples/servers/}}} and type the following commands to build dsp server examples.
+
+ {{{
+ # cd <work>/codec_engine_n_tools/codec_engine_2_25_02_11/examples/ti/sdo/ce/examples/servers/
+ # make clean
+ # make
+ }}}
+
+Note: This is the place I had mentioned earlier while configuring DSPLink. If you had given --gpp_temp=<path_of_dir_our_choice> --dsp0_temp=<path_of_dir_of_our_choice> while configuring DSPLink, you may get error similar as shown below. There should be way to way to rectify it, but I did not bother much and rather opted easier path. 
+
+ {{{
+ Error while building codec-engine server if you have specified some other destination directory directory while building dsplink.
 js: "/home/jars/Dsp_gsoc/xdctools_3_16_00_18/packages/xdc/cfg/Main.xs", line 40: XDC runtime error: can't find the library 'export/BIN/DspBios/OMAP3530/OMAP3530_0/RELEASE/dsplink.lib' specified by package dsplink.dsp. It wasn't found along the path '/home/jars/Dsp_gsoc/codec_engine_n_tools/codec_engine_2_25_02_11/examples/ti/sdo/ce/examples/servers/all_codecs/../../../../../..;/home/jars/Dsp_gsoc/codec_engine_n_tools/codec_engine_2_25_02_11/cetools/packages;/home/jars/Dsp_gsoc/codec_engine_n_tools/codec_engine_2_25_02_11/packages;/home/jars/Dsp_gsoc/bios/bios_5_41_00_06/packages;/home/jars/Dsp_gsoc/dsplink/dsplink_linux_1_64;/home/jars/Dsp_gsoc/xdctools_3_16_00_18/packages;../../../../../..;'.
 gmake[1]: *** [package/cfg/bin/ti_platforms_evm3530/all_x64Pcfg_c.c] Error 1
 gmake[1]: *** Deleting file `package/cfg/bin/ti_platforms_evm3530/all_x64Pcfg_c.c'
@@ -480,3 +498,20 @@ gmake: *** [/home/jars/Dsp_gsoc/codec_engine_n_tools/codec_engine_2_25_02_11/exa
 make[1]: *** [all] Error 2
 make[1]: Leaving directory `/home/jars/Dsp_gsoc/codec_engine_n_tools/codec_engine_2_25_02_11/examples/ti/sdo/ce/examples/servers/all_codecs'
 make: *** [all] Error 2
+ }}}
+
+Goto {{{<work>/codec_engine_n_tools/codec_engine_2_25_02_11/examples/ti/sdo/ce/examples/apps/}}} and type the following commands to build gpp application.
+ {{{
+ # cd <work>/codec_engine_n_tools/codec_engine_2_25_02_11/examples/ti/sdo/ce/examples/apps/
+ # make clean
+ # make
+ }}}
+
+Done with the building! Its time to test.
+
+
+
+
+
+
+
