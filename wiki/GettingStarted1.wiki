@@ -562,4 +562,5 @@ root@beagleboard:/media/pramod/dsplink#
 For more information you can also refer to
  
 {{{
-[1] <work>/codec_engine_n_tools/codec_engine_2_25_02_11/examples/build_instructions.html}}}
+[1] <work>/codec_engine_n_tools/codec_engine_2_25_02_11/examples/build_instructions.html
+}}}
