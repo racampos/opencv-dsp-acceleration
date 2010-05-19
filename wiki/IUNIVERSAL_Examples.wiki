@@ -5,8 +5,15 @@
 IUNIVERSAL API allows developer to use Codec-Engine framework for non-VISA(Video, Imaging, Speech or Audio) XDAIS complaint algorithms. 
 
 The examples can be downloaded from the link shown below.
+{{{
 [https://www-a.ti.com/downloads/sds_support/applications_packages/iuniversal_examples/index.htm IUNIVERSAL Examples Download]
-
+}}}
 
 = Details =
+Download and save the examples file iuniversal_examples-v0.2-Linux-x86-Install from the link shown above.
 
+{{{
+ # cd <Base_Download_Dir>
+ # chmod +x iuniversal_examples-v0.2-Linux-x86-Install
+ #./iuniversal_examples-v0.2-Linux-x86-Install
+ }}}
