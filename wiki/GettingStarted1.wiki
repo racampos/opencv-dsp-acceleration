@@ -332,7 +332,17 @@ That is all. If you did not have any build error in-between you should be able t
 
  {{{
      {{{
-  
+     root@beagleboard:/media/pramod/dsplink# ./loopgpp loop.out 256 5
+=============== Sample Application : LOOP ==========
+==== Executing sample for DSP processor Id 0 ====
+Entered LOOP_Create ()
+Leaving LOOP_Create ()
+Entered LOOP_Execute ()
+Leaving LOOP_Execute ()
+Entered LOOP_Delete ()
+Leaving LOOP_Delete ()
+====================================================
+root@beagleboard:/media/pramod/dsplink#
  
      }}}
  }}}
