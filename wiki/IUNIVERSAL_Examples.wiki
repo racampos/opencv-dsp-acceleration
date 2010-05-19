@@ -1,0 +1,12 @@
+#summary This page describes testing of IUNIVERSAL Examples.
+
+= Introduction =
+
+IUNIVERSAL API allows developer to use Codec-Engine framework for non-VISA(Video, Imaging, Speech or Audio) XDAIS complaint algorithms. 
+
+The examples can be downloaded from the link shown below.
+[https://www-a.ti.com/downloads/sds_support/applications_packages/iuniversal_examples/index.htm IUNIVERSAL Examples Download]
+
+
+= Details =
+
