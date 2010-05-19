@@ -337,13 +337,13 @@ Switch to your target platform(Beagleboard) and in the command prompt type follo
 
  }}}
 
-That is all will DSPLink. If you did not have any build error in-between you should be able to see output similar to the one shown below. If you want to test some other examples, don't forget to run commands below before you start executing.
+That is all will DSPLink. If you did not have any build error in-between you should be able to see output similar to the one shown below. Also, if you want to test some other examples, don't forget to run commands below before you start executing.
 
  {{{
  $ lpmOFF.x470uC
  $ lpmON.x470uC
-
- {{{
+ 
+ 
      
      root@beagleboard:/media/pramod/dsplink# ./loopgpp loop.out 256 5
 =============== Sample Application : LOOP ==========
@@ -507,11 +507,43 @@ Goto {{{<work>/codec_engine_n_tools/codec_engine_2_25_02_11/examples/ti/sdo/ce/e
  # make
  }}}
 
-Done with the building! Its time to test.
+Done with the building! Its time to test. 
+Goto {{{<work>/codec_engine_n_tools/codec_engine_2_25_02_11/examples/ti/sdo/ce/examples/apps/audio_copy/bin/ti_platforms_evm3530}}} and copy app_remote.xv5T to your work folder in target board file-system.
+ {{{
+ # cd <work>/codec_engine_n_tools/codec_engine_2_25_02_11/examples/ti/sdo/ce/examples/apps/audio_copy/bin/ti_platforms_evm3530/
+ # cp app_remote.xv5T <Board_Target_Mount>/<Target_work>
+ }}}
+
+Copy the input file in.dat from {{{<work>/codec_engine_n_tools/codec_engine_2_25_02_11/examples/ti/sdo/ce/examples/apps/audio_copy/}} to your target directory in your Beagleboard.
+ {{{
+ # cp <work>/codec_engine_n_tools/codec_engine_2_25_02_11/examples/ti/sdo/ce/examples/apps/audio_copy/in.dat <Board_Target_Mount>/<Target_work>
+ }}}
+
+Now copy the codec-server from {{{<work>/codec_engine_n_tools/codec_engine_2_25_02_11/examples/ti/sdo/ce/examples/servers/all_codecs/bin/ti_platforms_evm3530/}}} to your target directory in beagleboard.
+
+ {{{
+ # cp /home/jars/Dsp_gsoc/codec_engine_n_tools/codec_engine_2_25_02_11/examples/ti/sdo/ce/examples/servers/all_codecs/bin/ti_platforms_evm3530/all.x64P <Board_Target_Mount>/<Target_work>
+ }}}
+
+Befor starting to execute, we need to make sure that all the modules wh have built so far is loaded in Beagleboard. To make this easy, there is loadmodules.sh and unloadmodules.sh script files provided at {{{<work>/codec_engine_n_tools/codec_engine_2_25_02_11/examples/apps/system_files/OMAP3530/}}}. Edit loadmodules.sh to provide the correct path of the respective modules. Copy these files to the target directory in the Beagleboard. Type the following commands to test your examples.
+
+Note: Few things should be noted and take care of before executing the examples.
+1) you should pass mem=120 or less for the linux kernel in the u-boot argument.
+2) run loadmodules.sh befor us start and confirm all the modules are loaded by '$ lsmod'.You can visually inspect the loaded modules. The necessary modules are dsplinkk.ko, lpm_omap3530.ko and cmemk.ko.
+ {{{
+ $ cd <Target_work>
+ $./loadmodules.sh
+ $./app_remote.xv5T
+ 
+ }}}
+
+If everything goes well, you will be able to see following results at your screen.
+
+ {{{
+ 
+ }}}
 
 
 
-
-
-
-
+For more information you can also refer to
+[1]<work>/codec_engine_n_tools/codec_engine_2_25_02_11/examples/build_instructions.html
