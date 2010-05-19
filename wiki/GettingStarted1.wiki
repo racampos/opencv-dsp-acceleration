@@ -315,7 +315,7 @@ Now copy the sample examples to the board files system. You can copy as many sam
  {{{
  # cp $DSPLINK/gpp/export/BIN/Linux/OMAP3530/<DEBUG or RELEASE>/loopgpp <Board_Target_Mount>/<Target_work>
  # cp $DSPLINK/dsp/export/BIN/DspBios/OMAP3530/OMAP3530_0/<DEBUG or RELEASE>/loop.out <Board_Target_Mount>/<Target_work>
- }}
+ }}}
 
 ===Running DSPLink Sample application===
 
@@ -328,7 +328,14 @@ Switch to your target platform(Beagleboard) and in the command prompt type follo
 
  }}}
 
-That is all. If have successfully ran a sample
+That is all. If you did not have any build error in-between you should be able to see output similar to below.
+
+ {{{
+     {{{
+  
+ 
+     }}}
+ }}}
 
 
 Error while building codec-engine server if you have specified some other destination directory directory while building dsplink.
