@@ -16,11 +16,11 @@ XDC tools 3.16.00.18       [http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb
 
 Codec Engine 2.25.02.11    [http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/ce/2_25_02_11/index_FDS.html [Codec Engine with cetools]]
 
-All the tools were saved on my Desktop  at /home/jars/Desktop. Which will be called *Base_Download_Dir*.
+All the tools were saved on my Desktop  at /home/jars/Desktop. Which will be called {{{<Base_Download_Dir>}}}.
 = Details =
-Install DSP/BIOS Link
+==Install DSP/BIOS Link==
 
-First untar the DSP/BIOS Link (DSP Link) inside a folder in your working directory. In my case it is /home/jars/Dsp_gsoc, which I will name '*work*' for quick reference.
+First untar the DSP/BIOS Link (DSP Link) inside a folder in your working directory. In my case it is /home/jars/Dsp_gsoc, which I will name '{{{<work>}}}' for quick reference.
  {{{
  # mkdir -p <work>/dsplink
  # cd <work>/dsplink
@@ -34,31 +34,31 @@ Before we can proceed further, we need to install Code Generation Tools, DSP/BIO
  }}}
 After making them executable, we can start installing by executing the binaries.
 
-Installing Code Generation Tools
+===Installing Code Generation Tools===
 
  {{{
  # <Base_Download_Dir>/ti_cgt_c6000_7.0.1_setup_linux_x86.bin
  }}}
 It is simple afterward as graphical installation wizard starts and you just have to confirm with certain settings and select your installation directory. In my case the installation directory was selected to be 'work/code_gen'.
 
-Installing DSP/BIOS
+===Installing DSP/BIOS===
 
  {{{
  # <Base_Download_Dir>/bios_setuplinux_5_41_00_06.bin
  }}}
 It is simple afterward as graphical installation wizard starts and you just have to confirm with certain settings and select your installation directory. In my case the installation directory was selected to be 'work/bios'.
 
-Installing XDC Tools
+===Installing XDC Tools===
 
  {{{
  # <Base_Download_Dir>/xdctools_setuplinux_3_16_00_18.bin
  }}}
 It is simple afterward as graphical installation wizard starts and you just have to confirm with certain settings and select your installation directory. In my case the installation directory was selected to be 'work/xdctools'.
 
-
+=== Continue with DSPLink===
 After installing all the dependencies, we can now proceed further to install DSP Link.
  
-To start with export the base dsplink path. 
+To start with, export the base dsplink path. 
  {{{
  # export DSPLINK /home/jars/Dsp_gsoc/dsplink/dsplink_linux_1_64/dsplink
  }}}
@@ -228,6 +228,8 @@ Next, goto $DSPLINK/dsp/src/samples/ and execute following commands to build dsp
  
  }}}
 
+===Missing something! LPM??===
+
 If everything goes well, you are good to test some sample examples. But before that it is suggested to build LPM modules if you are using DSPLink outside the codec-engine. You need LPM module to power-cycle the DSP while switching to different application. It is not required to run the LPM for the first time. Before running different application you need to power off & then on the DSP using lpmOFF.x470uC. and lpmONx470uC. It can be downloaded at http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/lpm/1_24_02_09/. Save the file 'local_power_manager_linux_1_24_02_09.tar.gz' and untar it to the destination directory.
 
  {{{
@@ -255,7 +257,7 @@ Following changes are to be done inside Makefile.
  ...................
  }}}
 
-Finally the LPM module can be built. To build, you need to be in the same directory where the Makefile is.
+Finally the LPM module is ready to build. To build, you need to be in the same directory where the Makefile is.
 
  {{{
  # make 
@@ -266,6 +268,7 @@ LPM module is now built and you can see it in the same path from where you invok
  <work>/lpm/local_power_manager_linux_1_24_02_09/packages/ti/bios/power/utils/bin/ti_platforms_evm3530/linux/<debug & release>
  }}}
 
+===Copying Modules and sample application to beagleboard===
 Now the time has come to test your work.
 Make a folder called 'dsp' inside '/lib/modules/2.6.32/kernel/drivers/' of your target beagleboard by typing following in your target board command prompt.
  {{{
@@ -273,11 +276,40 @@ Make a folder called 'dsp' inside '/lib/modules/2.6.32/kernel/drivers/' of your 
  }}}
 
 First copy your dsplinkk.ko and lpm_omap3530.ko modules to your target board. If your board is NFS mount, it is just matter of copying these files from respective path to the 
-{{{<Board_Target_Dir>/lib/modules/2.6.32/kernel/drivers/dsp/}}}. If not, you can copy these in the particular folder mentioned above in your mmc card.
+{{{<Board_Target_Mount>/lib/modules/2.6.32/kernel/drivers/dsp/}}}. If not, you can copy these in the particular folder mentioned above in your mmc card.
  {{{
  # cp <work>/lpm/local_power_manager_linux_1_24_02_09/packages/ti/bios/power/modules/omap3530/lpm/lpm_omap3530.ko <Board_Target_Dir>/lib/modules/2.6.32/kernel/drivers/dsp/
- # cp $DSPLINK/gpp/export/BIN/Linux/OMAP3530/<DEBUG or RELEASE>/dsplinkk.ko <Board_Target_Dir>/lib/modules/2.6.32/kernel/drivers/dsp/
+ # cp $DSPLINK/gpp/export/BIN/Linux/OMAP3530/<DEBUG or RELEASE>/dsplinkk.ko <Board_Target_Mount>/lib/modules/2.6.32/kernel/drivers/dsp/
  }}}
+
+ Copy LPM binaries that is already provided for us at {{{ <work>/lpm/local_power_manager_linux_1_24_02_09/packages/ti/bios/power/utils/bin/ti_platforms_evm3530/linux/}}} to {{{<Board_Target_Mount>/usr/bin}}}.
+
+ {{{
+ # cp <work>/lpm/local_power_manager_linux_1_24_02_09/packages/ti/bios/power/utils/bin/ti_platforms_evm3530/linux/lpmOFF.x470uC <Board_Target_Mount>/usr/bin
+ # cp <work>/lpm/local_power_manager_linux_1_24_02_09/packages/ti/bios/power/utils/bin/ti_platforms_evm3530/linux/lpmON.x470uC <Board_Target_Mount>/usr/bin
+ }}}
+
+To make things easy, script to load and unload these recently built modules is already provided to us at {{{ <work>/lpm/local_power_manager_linux_1_24_02_09/packages/ti/bios/power/modules/omap3530/}}}. First create a folder in your target beagleboard filesystem where you want to preserve all your work related to DSPLink. Let's name this folder as *{{{<Target_work>}}}*. Now there is a little editing you need to do in file 'loadmodule.sh' before you copy them. Specify the correct path of your modules by editing the lines in the files as hown below.
+
+ {{{
+ ...........
+ ...........
+ insmod /lib/modules/2.6.32/kernel/drivers/dsp/dsplinkk.ko
+ ...........
+ ...........
+ insmod /lib/modules/2.6.32/kernel/drivers/dsp/lpm_omap3530.ko
+
+ }}}
+
+
+Now copy these files inside this folder.
+
+ {{{
+ # cp <work>/lpm/local_power_manager_linux_1_24_02_09/packages/ti/bios/power/modules/omap3530/loadmodules.sh <Board_Target_Mount>/<Target_work>/
+ cp <work>/lpm/local_power_manager_linux_1_24_02_09/packages/ti/bios/power/modules/omap3530/unloadmodules.sh <Board_Target_Mount>/<Target_work>/
+ }}}
+
+Now copy the sample examples to the board files system. You can copy as many samples as you want to test but I will mention here about only one.
 
 
 
