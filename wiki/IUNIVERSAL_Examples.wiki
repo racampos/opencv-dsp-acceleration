@@ -80,6 +80,17 @@ Now switch to the Beagleboard command prompt and type
 
 If everything went all right then, following output can be seen on the screen.
  {{{
- }}}
+root@beagleboard:/media/pramod/dsplink# ./remote_ti_platforms_evm3530_fir.xv5T
+@0x000e6127:[T:0x4001e290] ZZ - main> Welcome to app's main().
+App-> Application started.
+App-> Codec created.
+App-> Control completed.
+FIR Input: 16384 20480 20480 0 0 0 0 0 0 0 0 0 0 0
+FIR Output: 1150 268 -899 -3283 -2633 -2216 -1799 -1257 -527 394 1480 2665 3865
+4985
+App-> Completed Successfully
+app ended.
+root@beagleboard:/media/pramod/dsplink#
  }}}
  
+ Similaryly, you can also the test the Randgen example.
