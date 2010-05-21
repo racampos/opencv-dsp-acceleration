@@ -93,4 +93,4 @@ app ended.
 root@beagleboard:/media/pramod/dsplink#
  }}}
  
- Similaryly, you can also the test the Randgen example.
+ Similarly, you can also the test the Randgen example.
