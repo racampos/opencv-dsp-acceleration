@@ -65,7 +65,7 @@ To build, goto IUNIVERSAL examples base folder and run make command followed by 
 # make install
  }}} 
 
-Executables will be stored at <work>/iuniversal/output/. To test FIR example, copy fir_unitserver_evm3530.x64P and remote_ti_platforms_evm3530_fir.xv5T to your {{{Target_work>}}} folder in beagleboard.
+Executables will be stored at {{{<work>/iuniversal/output/}}}. To test FIR example, copy fir_unitserver_evm3530.x64P and remote_ti_platforms_evm3530_fir.xv5T to your {{{Target_work>}}} folder in beagleboard.
  {{{
  # cd <work>/iuniversal/output
  # cp fir_unitserver_evm3530.x64 <Board_Target_mount>/<Target_work>/
