@@ -46,10 +46,11 @@ Load all the kernel modules necessary, like dsplinkk.ko, lpm_omap3530.ko, cmemk.
 You can also load these modules using the script as described in the codec_engine part of [http://code.google.com/p/opencv-dsp-acceleration/wiki/GettingStarted1 this]. 
 If you get cmem error, thats probably you need to increase the buffer size while loading cmemk module.
 
-====Note====: So far, the example can perform 1-D DFT and sobel_3x3. 
+====Note====
+1) So far, the example can perform 1-D DFT and sobel_3x3. 
 
-1)The result of the 1-D DFT will be seen on console output screen and is not stored anywhere. The result will not match exactly with that from Matlab as scaling is to be done. For DFT size of 128, as in the example, the result should be multiplied by 8.
+2)The result of the 1-D DFT will be seen on console output screen and is not stored anywhere. The result will not match exactly with that from Matlab as scaling is to be done. For DFT size of 128, as in the example, the result should be multiplied by 8.
 
-2)The result for the sobel_3x3 will be stored as an image "result.pgm", in the same path where the code is executed. It can be viewed easily.
+3)The result for the sobel_3x3 will be stored as an image "result.pgm", in the same path where the code is executed. It can be viewed easily.
 
-3)By default, the example is set for sobel_3x3 operation. To check for 1-D DFT you need to change "OPENCV_Operation operation = OPENCV_OPERATION_DFT" near the top of the file "app.c" found at {{{<BASE_DIR}}}/beagle/apps/opencv/linux.
+4)By default, the example is set for sobel_3x3 operation. To check for 1-D DFT you need to change "OPENCV_Operation operation = OPENCV_OPERATION_DFT" near the top of the file "app.c" found at {{{<BASE_DIR}}}/beagle/apps/opencv/linux.
