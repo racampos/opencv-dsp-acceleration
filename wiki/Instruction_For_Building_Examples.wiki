@@ -46,7 +46,7 @@ Load all the kernel modules necessary, like dsplinkk.ko, lpm_omap3530.ko, cmemk.
 You can also load these modules using the script as described in the codec_engine part of [http://code.google.com/p/opencv-dsp-acceleration/wiki/GettingStarted1 this]. 
 If you get cmem error, thats probably you need to increase the buffer size while loading cmemk module.
 
-Note: So far, the example can perform 1-D DFT and sobel_3x3. 
+====Note====: So far, the example can perform 1-D DFT and sobel_3x3. 
 
 1)The result of the 1-D DFT will be seen on console output screen and is not stored anywhere. The result will not match exactly with that from Matlab as scaling is to be done. For DFT size of 128, as in the example, the result should be multiplied by 8.
 
