@@ -1,0 +1,55 @@
+#Building and testing the 1-D DFT and Sobel_3x3
+
+= Introduction =
+
+This page explains the building and testing procedure of the uploaded examples.
+
+
+= Details =
+
+It is assumed that you have a working codec-engine environment.
+The easiest way to have it through OpenEmbedded. If you have a OpenEmbedded development environment, you just need to do "#bitbake codec-engine". But before that don't forget to read the Readme file at {{{<OE_BASE_DIR>}}}/sources/openembedded/recipes/ti. You may have to download some of the tools manually.
+
+After you have your codec-engine environment, if you want to re-build the codec-engine examples or DSPLink examples you can follow [http://code.google.com/p/opencv-dsp-acceleration/wiki/GettingStarted1 this] for modifying your necessary Makefiles. There is some version mis-match in this particular page and it is recommended to follow only for Makefile changes and executing your examples.
+
+==Editing Necessary Files==
+===Rules.make===
+Change the path of various tools to point to the correct base directory. If you have one of your Rules.make file for your working DVSDK, you may probably borrow it. Don't forget to update the path for DSPLib and IMGLib.
+===Makefile===
+In the makefile change CODEGEN_INSTALL_DIR and CROSS_COMPILE to point to the correct base directory.
+===config.bld===
+Change C64P.rootDir in the config.bld file to point to your code_generation_tools base dirctory.
+
+==Building==
+===Server Executable and ARM Executable===
+ {{{#cd <PATH_TO_FOLDER_CONTAINING_MAKEFILE>}}} // Let us assume that this will be your BASE_DIR
+
+ {{{#make codec}}}
+
+ {{{#make server}}}
+
+ {{{#make app}}}
+
+
+The server executable will be located at
+  {{{<BASE_DIR>}}}/beagle/server/opencv_unitserver_evm3530 
+named "opencv_unitserver_evm3530.x64P".
+
+ The ARM executable will be located at
+  {{{<BASE_DIR}}}/beagle/apps/opencv/linux 
+named "remote_ti_platforms_evm3530_opencv.xv5T". 
+
+Copy these two files along with "road_grey.pgm" which is located at {{{<BASE_DIR>}}}/beagle/apps/opencv/linux to your beagleboard.
+
+Load all the kernel modules necessary, like dsplinkk.ko, lpm_omap3530.ko, cmemk.ko.
+
+You can also load these modules using the script as described in the codec_engine part of [http://code.google.com/p/opencv-dsp-acceleration/wiki/GettingStarted1 this]. 
+If you get cmem error, thats probably you need to increase the buffer size while loading cmemk module.
+
+Note: So far, the example can perform 1-D DFT and sobel_3x3. 
+
+1)The result of the 1-D DFT will be seen on console output screen and is not stored anywhere. The result will not match exactly with that from Matlab as scaling is to be done. For DFT size of 128, as in the example, the result should be multiplied by 8.
+
+2)The result for the sobel_3x3 will be stored as an image "result.pgm", in the same path where the code is executed. It can be viewed easily.
+
+3)By default, the example is set for sobel_3x3 operation. To check for 1-D DFT you need to change "OPENCV_Operation operation = OPENCV_OPERATION_DFT" near the top of the file "app.c" found at {{{<BASE_DIR}}}/beagle/apps/opencv/linux.
