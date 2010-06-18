@@ -8,7 +8,7 @@ This page explains the building and testing procedure of the uploaded examples.
 = Details =
 
 It is assumed that you have a working codec-engine environment.
-The easiest way to have it through OpenEmbedded. If you have a OpenEmbedded development environment, you just need to do "#bitbake codec-engine". But before that don't forget to read the Readme file at {{{<OE_BASE_DIR>}}}/sources/openembedded/recipes/ti. You may have to download some of the tools manually.
+The easiest way to have it through OpenEmbedded. If you have a OpenEmbedded development environment, you just need to do "#bitbake ti-codec-engine". But before that don't forget to read the Readme file at {{{<OE_BASE_DIR>}}}/sources/openembedded/recipes/ti. You may have to download some of the tools manually.
 
 After you have your codec-engine environment, if you want to re-build the codec-engine examples or DSPLink examples you can follow [http://code.google.com/p/opencv-dsp-acceleration/wiki/GettingStarted1 this] for modifying your necessary Makefiles. There is some version mis-match in this particular page and it is recommended to follow only for Makefile changes and executing your examples.
 
