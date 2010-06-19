@@ -12,6 +12,9 @@ The easiest way to have it through OpenEmbedded. If you have a OpenEmbedded deve
 
 After you have your codec-engine environment, if you want to re-build the codec-engine examples or DSPLink examples you can follow [http://code.google.com/p/opencv-dsp-acceleration/wiki/GettingStarted1 this] for modifying your necessary Makefiles. There is some version mis-match in this particular page and it is recommended to follow only for Makefile changes and executing your examples.
 
+Checkout the project using following command 
+
+
 ==Editing Necessary Files==
 ===Rules.make===
 Change the path of various tools to point to the correct base directory. If you have one of your Rules.make file for your working DVSDK, you may probably borrow it. Don't forget to update the path for DSPLib and IMGLib.
