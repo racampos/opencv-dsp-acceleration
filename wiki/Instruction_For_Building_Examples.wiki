@@ -64,7 +64,9 @@ named opencv_dsp_evm3530.lv5T.
 
 ==Set Memory for Linux==
 Before booting up the beagleboard, set aside memory for linux not greater than 128M from uboot prompt.
-  #beagleboard.org: 
+  OMAP3 beagleboard.org # setenv bootargs console=${console} vram=${vram} mapfb.mode=dvi:${dvimod
+e} omapfb.debug=y omapdss.def_disp=${defaultdisplay} root=${mmcroot} rootfstype=
+${mmcrootfstype} mem=128M 
 
 Copy these two executable files, the directory {{{<BASE_DIR>}}}/beagle/apps/opencv/lib along with "road_grey.pgm" which is located at {{{<BASE_DIR>}}}/beagle/apps/opencv/linux to your beagleboard.
 
