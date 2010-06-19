@@ -44,6 +44,8 @@ Change "C64P.rootDir" in the config.bld file to point to your code_generation_to
 
  {{{#make server}}}
 
+ {{{#make app_lib}}}
+
  {{{#make app}}}
 
 
@@ -55,11 +57,15 @@ The ARM executable will be located at
   {{{<BASE_DIR}}}/beagle/apps/opencv/linux 
 named "remote_ti_platforms_evm3530_opencv.xv5T". 
 
-Copy these two files along with "road_grey.pgm" which is located at {{{<BASE_DIR>}}}/beagle/apps/opencv/linux to your beagleboard.
+The ARM shared library will be located at 
+  {{{<BASE_DIR}}}/beagle/apps/opencv/lib
+named opencv_dsp_evm3530.lv5T.
+
+Copy these two executable files, the directory {{{<BASE_DIR>}}}/beagle/apps/opencv/lib along with "road_grey.pgm" which is located at {{{<BASE_DIR>}}}/beagle/apps/opencv/linux to your beagleboard.
 
 Load all the kernel modules necessary, like dsplinkk.ko, lpm_omap3530.ko, cmemk.ko.
 
-You can also load these modules using the script as described in the codec_engine part of [http://code.google.com/p/opencv-dsp-acceleration/wiki/GettingStarted1 this]. 
+You can also load these modules using the script in the scripts directory. 
 If you get cmem error, thats probably you need to increase the buffer size while loading cmemk module.
 
 ====Note====
