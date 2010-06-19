@@ -13,17 +13,30 @@ The easiest way to have it through OpenEmbedded. If you have a OpenEmbedded deve
 After you have your codec-engine environment, if you want to re-build the codec-engine examples or DSPLink examples you can follow [http://code.google.com/p/opencv-dsp-acceleration/wiki/GettingStarted1 this] for modifying your necessary Makefiles. There is some version mis-match in this particular page and it is recommended to follow only for Makefile changes and executing your examples.
 
 Checkout the project using following command 
+  svn checkout http://opencv-dsp-acceleration.googlecode.com/svn/trunk/ opencv-dsp-acceleration-read-only
+
+The source-file for the example is on trunk and its subdirectories.
+
+Goto {{{BASE_DIR}}}
+
+#cd {{{Dir_You_Checked_Out}}}/dsp_opencv
 
 
 ==Editing Necessary Files==
+
+Use "gedit" or "vi" to edit following files.
+
 ===Rules.make===
 Change the path of various tools to point to the correct base directory. If you have one of your Rules.make file for your working DVSDK, you may probably borrow it. Don't forget to update the path for DSPLib and IMGLib.
+
 ===Makefile===
 In the makefile change CODEGEN_INSTALL_DIR and CROSS_COMPILE to point to the correct base directory.
+
 ===config.bld===
-Change C64P.rootDir in the config.bld file to point to your code_generation_tools base dirctory.
+Change "C64P.rootDir" in the config.bld file to point to your code_generation_tools base dirctory.
 
 ==Building==
+
 ===Server Executable and ARM Executable===
  {{{#cd <PATH_TO_FOLDER_CONTAINING_MAKEFILE>}}} // Let us assume that this will be your BASE_DIR
 
@@ -38,7 +51,7 @@ The server executable will be located at
   {{{<BASE_DIR>}}}/beagle/server/opencv_unitserver_evm3530 
 named "opencv_unitserver_evm3530.x64P".
 
- The ARM executable will be located at
+The ARM executable will be located at
   {{{<BASE_DIR}}}/beagle/apps/opencv/linux 
 named "remote_ti_platforms_evm3530_opencv.xv5T". 
 
