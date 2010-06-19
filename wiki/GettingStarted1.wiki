@@ -1,6 +1,10 @@
 #summary Procedure to setup tools like DSPLink and Codec-Engine.
 This wiki-page describes the required setup for installing and building DSPLink and Codec-Engine.
 
+=Note=
+
+The easy and convenient way to get all the necessary tools for this project is using bitbake if you are using OpenEmbedded based development environment. For example, #bitbake ti-dsplink will build dsplink and sample examples. Similarly #bitbake ti-codec-engine will give you cod-engine framework and all of its dependencies. The instruction below can be useful if you want to build everything individually and out-side OpenEmbedded. Also, there is virsion mis-match. Its better to refer codec-engine bitbake recipe to find the correct version of the tools required.
+
 = Introduction =
 
 Installing DSP/BIOS Link, Code Generation Tools, DSP BIOS, XDC Tools, LPM, CMEM and Codec Engine.
