@@ -17,7 +17,8 @@ Checkout the project using following command
 
 The source-file for the example is on trunk and its subdirectories.
 
-Goto {{{BASE_DIR}}}
+
+==Goto {{{BASE_DIR}}}==
 
 #cd {{{Dir_You_Checked_Out}}}/dsp_opencv
 
@@ -60,6 +61,10 @@ named "remote_ti_platforms_evm3530_opencv.xv5T".
 The ARM shared library will be located at 
   {{{<BASE_DIR}}}/beagle/apps/opencv/lib
 named opencv_dsp_evm3530.lv5T.
+
+==Set Memory for Linux==
+Before booting up the beagleboard, set aside memory for linux not greater than 128M from uboot prompt.
+  #beagleboard.org: 
 
 Copy these two executable files, the directory {{{<BASE_DIR>}}}/beagle/apps/opencv/lib along with "road_grey.pgm" which is located at {{{<BASE_DIR>}}}/beagle/apps/opencv/linux to your beagleboard.
 
