@@ -85,4 +85,4 @@ If you get cmem error, thats probably you need to increase the buffer size while
 
   b)The result for the sobel_3x3 will be stored as an image "result.pgm", in the same path where the code is executed. It can be viewed easily.
 
-  c)By default, the example is set for sobel_3x3 operation. To check for 1-D DFT you need to change "OPENCV_Operation operation = OPENCV_OPERATION_DFT" near the top of the file "app.c" found at {{{<BASE_DIR}}}/beagle/apps/opencv/linux.}}}
+  c)By default, the example is set for sobel_3x3 operation. To check for 1-D DFT you need to change "OPENCV_Operation operation = OPENCV_OPERATION_DFT" near the top of the file "app.c" found at {{{<BASE_DIR>}}}/beagle/apps/opencv/linux.
