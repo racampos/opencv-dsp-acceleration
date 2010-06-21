@@ -77,10 +77,12 @@ You can also load these modules using the script in the scripts directory.
 If you get cmem error, thats probably you need to increase the buffer size while loading cmemk module.
 
 ====Note====
-1) So far, the example can perform 1-D DFT and sobel_3x3. 
+1) To test the example you need to have a webcam. I have tested the app using Logitech webcam Pro 9000. It will demonstrate the sobel algorithm.
 
-2)The result of the 1-D DFT will be seen on console output screen and is not stored anywhere. The result will not match exactly with that from Matlab as scaling is to be done. For DFT size of 128, as in the example, the result should be multiplied by 8.
+2) If you want to test for single image "road_grey.pgm", please checkout svn revision 75. So far, the example in this revision can perform 1-D DFT and sobel_3x3. 
 
-3)The result for the sobel_3x3 will be stored as an image "result.pgm", in the same path where the code is executed. It can be viewed easily.
+  {{{a)The result of the 1-D DFT will be seen on console output screen and is not stored anywhere. The result will not match exactly with that from Matlab as scaling is to be done. For DFT size of 128, as in the example, the result should be multiplied by 8.
 
-4)By default, the example is set for sobel_3x3 operation. To check for 1-D DFT you need to change "OPENCV_Operation operation = OPENCV_OPERATION_DFT" near the top of the file "app.c" found at {{{<BASE_DIR}}}/beagle/apps/opencv/linux.
+b)The result for the sobel_3x3 will be stored as an image "result.pgm", in the same path where the code is executed. It can be viewed easily.
+
+c)By default, the example is set for sobel_3x3 operation. To check for 1-D DFT you need to change "OPENCV_Operation operation = OPENCV_OPERATION_DFT" near the top of the file "app.c" found at {{{<BASE_DIR}}}/beagle/apps/opencv/linux.}}}
