@@ -10,7 +10,7 @@ This page explains the building and testing procedure of the uploaded examples.
 It is assumed that you have a working codec-engine environment.
 The easiest way to have it through OpenEmbedded. If you have a OpenEmbedded development environment, you just need to do "#bitbake ti-codec-engine". But before that don't forget to read the Readme file at {{{<OE_BASE_DIR>}}}/sources/openembedded/recipes/ti. You may have to download some of the tools manually.
 
-After you have your codec-engine environment, if you want to re-build the codec-engine examples or DSPLink examples you can follow [http://code.google.com/p/opencv-dsp-acceleration/wiki/GettingStarted1 this] for modifying your necessary Makefiles. There is some version mis-match in this particular page and it is recommended to follow only for Makefile changes and executing your examples.
+After you have your codec-engine environment, if you want to re-build the codec-engine examples or DSPLink examples you can follow [http://code.google.com/p/opencv-dsp-acceleration/wiki/GettingStarted1 this] for modifying your necessary Makefiles. There is some version mis-match in this page and it is recommended to follow only for Makefile changes and executing re-built examples.
 
 Checkout the project using following command 
   svn checkout http://opencv-dsp-acceleration.googlecode.com/svn/trunk/ opencv-dsp-acceleration-read-only
@@ -45,7 +45,7 @@ Change "C64P.rootDir" in the config.bld file to point to your code_generation_to
 
  {{{#make server}}}
 
- {{{#make app_lib}}}
+ {{{#make library}}}
 
  {{{#make app}}}
 
@@ -58,9 +58,6 @@ The ARM executable will be located at
   {{{<BASE_DIR}}}/beagle/apps/opencv/linux 
 named "remote_ti_platforms_evm3530_opencv.xv5T". 
 
-The ARM shared library will be located at 
-  {{{<BASE_DIR}}}/beagle/apps/opencv/lib
-named opencv_dsp_evm3530.lv5T.
 
 ==Set Memory for Linux==
 
@@ -69,7 +66,7 @@ Before booting up the beagleboard, set aside memory for linux not greater than 1
 
 ==Copy Files and Execute==
 
-Copy these two executable files, the directory {{{<BASE_DIR>}}}/beagle/apps/opencv/lib along with "road_grey.pgm" which is located at {{{<BASE_DIR>}}}/beagle/apps/opencv/linux to your beagleboard.
+Copy these two executable files, along with "road_grey.pgm" which is located at {{{<BASE_DIR>}}}/beagle/apps/opencv/test_data to your beagleboard.
 
 Load all the kernel modules necessary, like dsplinkk.ko, lpm_omap3530.ko, cmemk.ko.
 
