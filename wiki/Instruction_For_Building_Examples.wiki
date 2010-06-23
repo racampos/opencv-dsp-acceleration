@@ -79,7 +79,7 @@ If you get cmem error, thats probably you need to increase the buffer size while
 ====Note====
 1) To test the example you need to have a webcam. I have tested the app using Logitech webcam Pro 9000. It will demonstrate the sobel algorithm.
 
-2) If you want to test for single image "road_grey.pgm", please checkout svn revision 75. So far, the example in this revision can perform 1-D DFT and sobel_3x3. 
+2) If you want to test for single image "road_grey.pgm" and 1-D dft, please checkout svn revision 75. So far, the example in this revision can perform 1-D DFT and sobel_3x3. 
 
   a)The result of the 1-D DFT will be seen on console output screen and is not stored anywhere. The result will not match exactly with that from Matlab as scaling is to be done. For DFT size of 128, as in the example, the result should be multiplied by 8.
 
