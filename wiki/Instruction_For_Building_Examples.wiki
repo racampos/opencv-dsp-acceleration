@@ -48,13 +48,15 @@ Change "C64P.rootDir" in the config.bld file to point to your code_generation_to
 ===link.cmd===
 Go to sub-directory containing server package and edit file link.cmd.
 
-  {{{#cd {{{<BASE_DIR>}}}/beagle/server/opencv_unitserver_evm3530}}}
+  {{{#cd <BASE_DIR>/beagle/server/opencv_unitserver_evm3530}}}
+
   {{{#gedit link.cmd}}}
 
 And add following lines to this file.
 
--l {{{<PATH_WHERE_YOU_SAVED_DSPLIB>}}}/dsplib_v210/dsplib64plus.lib
--l {{{<PATH_WHERE_YOU_SAVED_IMGLIB>}}}/imglib_v201/lib/target/imglib2.l64P
+  -l {{{<PATH_WHERE_YOU_SAVED_DSPLIB>}}}/dsplib_v210/dsplib64plus.lib
+
+  -l {{{<PATH_WHERE_YOU_SAVED_IMGLIB>}}}/imglib_v201/lib/target/imglib2.l64P
 
 
 ==Building==
