@@ -48,9 +48,6 @@ Change the path of various tools to point to the correct base directory. If you 
 ===Makefile===
 In the makefile change CODEGEN_INSTALL_DIR and CROSS_COMPILE to point to the correct base directory.
 
-===config.bld===
-Change "C64P.rootDir" in the config.bld file to point to your code_generation_tools base dirctory.
-
 ===link.cmd===
 Go to sub-directory containing server package and edit file link.cmd.
 
