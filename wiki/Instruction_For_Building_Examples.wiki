@@ -13,15 +13,19 @@ The easiest way to have it through OpenEmbedded. If you have a OpenEmbedded deve
 After you have your codec-engine environment, if you want to re-build the codec-engine examples or DSPLink examples you can follow [http://code.google.com/p/opencv-dsp-acceleration/wiki/GettingStarted1 this] for modifying your necessary Makefiles. There is some version mis-match in this page and it is recommended to follow only for Makefile changes and executing re-built examples.
 
 ==Note==
-You need DSPLib and IMGLib for this project.
+Befor you start building this example, you need the following.
 
-DSPLib can be found at [http://focus.ti.com/docs/toolsw/folders/print/sprc265.html]
+1) OpenCV built using bitbake.
 
-IMGLib can be found at [http://focus.ti.com/docs/toolsw/folders/print/sprc264.html]
+2) DSPLib and IMGLib.
 
-You can download and save them at the directory containing various tools like 'code generation tools, 'codec-engine', 'xdc-tools', etc.
+  DSPLib can be found at [http://focus.ti.com/docs/toolsw/folders/print/sprc265.html]
 
-For example, I have saved these libraries at {{{/media/disk/OE/work/ti}}}.
+  IMGLib can be found at [http://focus.ti.com/docs/toolsw/folders/print/sprc264.html]
+
+  You can download and save them at the directory containing various tools like 'code generation tools, 'codec-engine', 'xdc-tools', etc.
+
+  For example, I have saved these libraries at {{{/media/disk/OE/work/ti}}}.
 
 *Checkout the project using following command* 
   svn checkout http://opencv-dsp-acceleration.googlecode.com/svn/trunk/ opencv-dsp-acceleration-read-only
