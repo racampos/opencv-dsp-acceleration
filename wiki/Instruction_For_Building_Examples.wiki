@@ -14,14 +14,16 @@ After you have your codec-engine environment, if you want to re-build the codec-
 
 ==Note==
 You need DSPLib and IMGLib for this project.
+
 DSPLib can be found at [http://focus.ti.com/docs/toolsw/folders/print/sprc265.html]
+
 IMGLib can be found at [http://focus.ti.com/docs/toolsw/folders/print/sprc264.html]
 
 You can download and save them at the directory containing various tools like 'code generation tools, 'codec-engine', 'xdc-tools', etc.
 
 For example, I have saved these libraries at {{{/media/disk/OE/work/ti}}}.
 
-Checkout the project using following command 
+*Checkout the project using following command* 
   svn checkout http://opencv-dsp-acceleration.googlecode.com/svn/trunk/ opencv-dsp-acceleration-read-only
 
 The source-file for the example is on trunk and its subdirectories.
