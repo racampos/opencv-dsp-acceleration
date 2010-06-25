@@ -1,4 +1,5 @@
-#Building and testing the 1-D DFT and Sobel_3x3
+#Building and testing the Sobel
+
 
 = Introduction =
 
