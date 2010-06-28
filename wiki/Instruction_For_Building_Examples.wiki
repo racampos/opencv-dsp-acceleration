@@ -49,6 +49,12 @@ Change the path of various tools to point to the correct base directory. If you 
 ===Makefile===
 In the makefile change CODEGEN_INSTALL_DIR and CROSS_COMPILE to point to the correct base directory.
 
+===Makefile.app===
+Change path to OpenCV header files in Makefile.app
+
+For example, you may find *{{{OPENCV_PATH = /media/disk/openembedded/build/tmp-angstrom_2008_1/sysroots/armv7a-angstrom-linux-gnueabi/usr/include}}}* if you look at the Makefile.app. Change the path to point to the base directory containing opencv and opencv2 sub-directories.
+
+
 ===link.cmd===
 Go to sub-directory containing server package and edit file link.cmd.
 
