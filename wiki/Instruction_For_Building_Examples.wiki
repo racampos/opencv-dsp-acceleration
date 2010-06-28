@@ -82,14 +82,20 @@ And add following lines to this file.
 
  {{{#make app}}}
 
+ {{{#make install}}}
+
 
 The server executable will be located at
   {{{<BASE_DIR>}}}/beagle/server/opencv_unitserver_evm3530 
-named "opencv_unitserver_evm3530.x64P".
+named *"opencv_unitserver_evm3530.x64P"*.
 
 The ARM executable will be located at
   {{{<BASE_DIR}}}/beagle/apps/opencv/linux 
-named "remote_ti_platforms_evm3530_opencv.xv5T". 
+named *"remote_ti_platforms_evm3530_opencv.xv5T"*. 
+
+The shared library will be located at 
+  {{{<BASE_DIR}}}/beagle/library/opencv/lib
+named *"libopencvdsp.so"*
 
 
 ==Set Memory for Linux==
@@ -97,14 +103,19 @@ named "remote_ti_platforms_evm3530_opencv.xv5T".
 Before booting up the beagleboard, set aside memory for linux not greater than 128M from uboot prompt.
   OMAP3 beagleboard.org # setenv bootargs console=${console} vram=${vram} mapfb.mode=dvi:${dvimode} omapfb.debug=y omapdss.def_disp=${defaultdisplay} root=${mmcroot} rootfstype=${mmcrootfstype} mem=128M 
 
-==Copy Files and Execute==
+==Copy Files and Executables to Beagleboard==
 
-Copy these two executable files, along with "road_grey.pgm" which is located at {{{<BASE_DIR>}}}/beagle/apps/opencv/test_data to your beagleboard.
+Copy  *opencv_unitserver_evm3530.x64P*, *remote_ti_platforms_evm3530_opencv.xv5T* and the folder *{{{<BASE_DIR}}}/beagle/library/opencv/lib* to your beagleboard at the same base directory. If you have already executed *#make install*, the library and other executables will be copied for you if your host is nfs mounted over Beagleboard. However, to use this command the *EXEC_DIR* variable should be properly set in Rules.make.
 
 Load all the kernel modules necessary, like dsplinkk.ko, lpm_omap3530.ko, cmemk.ko.
 
 You can also load these modules using the script in the scripts directory. 
-If you get cmem error, thats probably you need to increase the buffer size while loading cmemk module.
+If you are using your own script, please check the buffer size. Memory region allocated to CMEM should not overlap with that allocated to the operating system.
+
+==Execute==
+Simply type the following command to execute. A window will pop-up which will show the processed webcam-view.
+
+*#./remote_ti_platforms_evm3530_opencv.xv5T*
 
 ====Note====
 1) To test the example you need to have a webcam. I have tested the app using Logitech webcam Pro 9000. It will demonstrate the sobel algorithm.
@@ -113,6 +124,6 @@ If you get cmem error, thats probably you need to increase the buffer size while
 
   a)The result of the 1-D DFT will be seen on console output screen and is not stored anywhere. The result will not match exactly with that from Matlab as scaling is to be done. For DFT size of 128, as in the example, the result should be multiplied by 8.
 
-  b)The result for the sobel_3x3 will be stored as an image "result.pgm", in the same path where the code is executed. It can be viewed easily.
+  b) Copy "road_grey.pgm" file located at {{{<BASE_DIR>}}}/beagle/apps/opencv/test_data before executing. The result for the sobel_3x3 will be stored as an image "result.pgm", in the same path where the code is executed. It can be viewed easily.
 
   c)By default, the example is set for sobel_3x3 operation. To check for 1-D DFT you need to change "OPENCV_Operation operation = OPENCV_OPERATION_DFT" near the top of the file "app.c" found at {{{<BASE_DIR>}}}/beagle/apps/opencv/linux.
