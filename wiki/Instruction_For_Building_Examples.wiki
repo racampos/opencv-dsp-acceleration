@@ -1,4 +1,4 @@
-#Building and testing the Sobel
+#Building and testing this project
 
 
 = Introduction =
