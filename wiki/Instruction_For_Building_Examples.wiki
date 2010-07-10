@@ -17,6 +17,10 @@ After you have your codec-engine environment, if you want to re-build the codec-
 Befor you start building this example, you need the following.
 
 1) OpenCV built using bitbake.
+   You need to modify some of the source files using the patch provide at  {{{Dir_You_Checked_Out}}}/dsp_opencv/patch. Therefore it is suggested that you either comment the line *INHERIT += "rm_work"* to *#INHERIT += "rm_work"* on _local.conf_ at {{{<OE_BASE_DIR>}}}/build/conf before you do *#bitbake opencv*, or use following commands to build OpenCV.
+  #bitbake -f -c compile opencv
+
+Install OpenCV package on Beagleboard, if it is not installed.
 
 2) DSPLib and IMGLib.
 
@@ -31,15 +35,41 @@ Befor you start building this example, you need the following.
 *Checkout the project using following command* 
   svn checkout http://opencv-dsp-acceleration.googlecode.com/svn/trunk/ opencv-dsp-acceleration-read-only
 
-The source-file for the example is on trunk and its subdirectories.
+The source-file for the example is on trunk and its subdirectories. The folder you checked out the project will be called "DIR_YOU_CHECKED_OUT".
+
+==Applying OpenCV patch and re-building==
+
+There is a OpenCV patch provided at  {{{DIR_YOU_CHECKED_OUT}}}/dsp_opencv/patch. Go to  the base directory containing OpenCV in the development environment. Apply the patch. For example, 
+  #cd {{{<OE_BASE_DIR>}}}/build/tmp-angstrom_2008_1/work/armv7a-angstrom-linux-gnueabi/opencv-2.1.0+svnr3241-r1/opencv
+  #patch -p0 < {{{DIR_YOU_CHECKED_OUT}}}/dsp_opencv/patch/opencvdsp.diff 
+
+If that didnot work try
+
+  #patch -p1 < {{{Dir_You_Checked_Out}}}/dsp_opencv/patch/opencvdsp.diff 
+
+Now, from the OpenCV base directory go to *modules/imgproc/CMakeFiles/opencv_imgproc.dir*
+
+  #cd modules/imgproc/CMakeFiles/opencv_imgproc.dir
+
+Edit file *flags.make* using "gedit" and add line "-I{{<DIR_YOU_CHECKED_OUT>}}}/dsp_opencv" at the end of "CXX_FLAGS =".
+
+Similarly, edit file *link.txt* and add "-ldspopencv" in between. The part of line after adding this word will look some-what similar like "-L/media/disk/OE/build/tmp-angstrom_2008_1/sysroots/armv7a-angstrom-linux-gnueabi/usr/lib -Wl,-rpath-link *-lopencvdsp*,/media/disk/OE/build/tmp-angstrom_2008_1/sysroots/armv7a-angstrom-linux-gnueabi/usr/lib" 
+
+Now,goto "modules/core/CMakeFiles/opencv_core.dir" from the OpenCV base directory and add the same as mentioned above to the files *flags.make* and *link.txt*.
+
+From the base-directory of OpenCV, issue the following commands to build the new library.
+  #make opencv_imgproc/fast
+  #make opencv_core/fast
+
+These commands will re-build 'opencv_core' and 'opencv_imgproc' libraries which will be saved at {{{<OPENCV_BASE_DIR>}}}/lib. Now, copy these library files, libopencv_core.so, libopencv_core.so.2.1, libopencv_core.so.2.1.1, libopencv_imgproc.so, libopencv_imgproc.so.2.1 and libopencv_imgproc.so.2.1.1 to your Beagleboard at folder "/usr/lib".
 
 
 ==Goto {{{BASE_DIR}}}==
 
-#cd {{{Dir_You_Checked_Out}}}/dsp_opencv
+  #cd {{{Dir_You_Checked_Out}}}/dsp_opencv
 
 
-==Editing Necessary Files==
+==Editing Necessary Files For this project==
 
 Use "gedit" or "vi" to edit following files.
 
@@ -47,7 +77,7 @@ Use "gedit" or "vi" to edit following files.
 Change the path of various tools to point to the correct base directory. If you have one of your Rules.make file for your working DVSDK, you may probably borrow it. Don't forget to update the path for DSPLib and IMGLib.
 
 ===Makefile===
-In the makefile change CODEGEN_INSTALL_DIR and CROSS_COMPILE to point to the correct base directory.
+In the makefile change *CODEGEN_INSTALL_DIR* and *CROSS_COMPILE* to point to the correct base directory of your DSP-side and ARM-side toolchain. Also, change *LD_DIR* to point to the /usr/bin of your OE build environment. For example, I have changed it to */media/disk/OE/build/tmp-angstrom_2008_1/sysroots/armv7a-angstrom-linux-gnueabi/usr/lib*.
 
 ===Makefile.app===
 Change path to OpenCV header files in Makefile.app
@@ -105,7 +135,7 @@ Before booting up the beagleboard, set aside memory for linux not greater than 1
 
 ==Copy Files and Executables to Beagleboard==
 
-Copy  *opencv_unitserver_evm3530.x64P*, *remote_ti_platforms_evm3530_opencv.xv5T* and the folder *{{{<BASE_DIR}}}/beagle/library/opencv/lib* to your beagleboard at the same base directory. If you have already executed *#make install*, the library and other executables will be copied for you if your host is nfs mounted over Beagleboard. However, to use this command the *EXEC_DIR* variable should be properly set in Rules.make.
+Copy  *opencv_unitserver_evm3530.x64P* and *remote_ti_platforms_evm3530_opencv.xv5T*  to your beagleboard at the same base directory. If you have already executed *#make install*, executables will be copied for you if your host is nfs mounted over Beagleboard. However, to use this command the *EXEC_DIR* variable should be properly set in Rules.make. Also, copy the ARM side library that you just build, libopencvdsp.so, to the Beagleboard at '/usr/lib'.
 
 Load all the kernel modules necessary, like dsplinkk.ko, lpm_omap3530.ko, cmemk.ko.
 
@@ -113,17 +143,16 @@ You can also load these modules using the script in the scripts directory.
 If you are using your own script, please check the buffer size. Memory region allocated to CMEM should not overlap with that allocated to the operating system.
 
 ==Execute==
-Simply type the following command to execute. A window will pop-up which will show the processed webcam-view.
+Simply type the following command to execute. This will show the usage of the command. You can follow the usage after that. To toggle between DSP and ARM you can either export *OPENCVDSP* as 1 or 0 to environment variable.
 
-*#./remote_ti_platforms_evm3530_opencv.xv5T*
+*#OPENCVDSP=1 ./remote_ti_platforms_evm3530_opencv.xv5T* // For using DSP and ARM
+*#OPENCVDSP=0 ./remote_ti_platforms_evm3530_opencv.xv5T* // For using ARM only
 
 ====Note====
-1) To test the example you need to have a webcam. I have tested the app using Logitech webcam Pro 9000. It will demonstrate the sobel algorithm.
+1) To test the example you may need to copy the test data files at {{{<BASE_DIR>}}}/beagle/apps/opencv/test_data or need to have a webcam. I have tested the app using Logitech webcam Pro 9000 to demonstrate sobel algorithm.
+2) The example demonstrates 2-D 16x16 forward DFT. The output data is scaled and displayed on the screen.
+3) The example demonstrated 3x3 sobel algorithm. Due to low visibility of signed-image in using cvShowImage(), the image is converted back to unsigned and then displayed.
 
-2) If you want to test for single image "road_grey.pgm" and 1-D dft, please checkout svn revision 75. So far, the example in this revision can perform 1-D DFT and sobel_3x3. 
+To test different sobel filter and different DFT types supported, you need to modify the 'app.c' accordingly. 
 
-  a)The result of the 1-D DFT will be seen on console output screen and is not stored anywhere. The result will not match exactly with that from Matlab as scaling is to be done. For DFT size of 128, as in the example, the result should be multiplied by 8.
-
-  b) Copy "road_grey.pgm" file located at {{{<BASE_DIR>}}}/beagle/apps/opencv/test_data before executing. The result for the sobel_3x3 will be stored as an image "result.pgm", in the same path where the code is executed. It can be viewed easily.
-
-  c)By default, the example is set for sobel_3x3 operation. To check for 1-D DFT you need to change "OPENCV_Operation operation = OPENCV_OPERATION_DFT" near the top of the file "app.c" found at {{{<BASE_DIR>}}}/beagle/apps/opencv/linux.
+ 
