@@ -59,6 +59,7 @@ Now,goto "modules/core/CMakeFiles/opencv_core.dir" from the OpenCV base director
 
 From the base-directory of OpenCV, issue the following commands to build the new library.
   {{{#make opencv_imgproc/fast}}}
+
   {{{#make opencv_core/fast}}}
 
 These commands will re-build 'opencv_core' and 'opencv_imgproc' libraries which will be saved at {{{<OPENCV_BASE_DIR>}}}/lib. Now, copy these library files, libopencv_core.so, libopencv_core.so.2.1, libopencv_core.so.2.1.1, libopencv_imgproc.so, libopencv_imgproc.so.2.1 and libopencv_imgproc.so.2.1.1 to your Beagleboard at folder "/usr/lib".
@@ -66,7 +67,7 @@ These commands will re-build 'opencv_core' and 'opencv_imgproc' libraries which 
 
 ==Goto {{{BASE_DIR}}}==
 
-  {{{#cd {{{Dir_You_Checked_Out}}}/dsp_opencv}}}
+  {{{#cd {{{DIR_YOU_CHECKED_OUT}}}/dsp_opencv}}}
 
 
 ==Editing Necessary Files For this project==
