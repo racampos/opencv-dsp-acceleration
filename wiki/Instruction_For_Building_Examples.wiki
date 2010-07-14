@@ -83,11 +83,11 @@ Now change directory to *OPENCV_BASE*.ie, OE_BASE/build/tmp-angstrom_2008_1/work
 
   Execute following command to add base directory of this project work to the CXX_FLAGS in the files OPENCV_BASE/modules/imgproc/CMakeFiles/opencv_imgproc.dir/flags.make and OPENCV_BASE/modules/core/CMakeFiles/opencv_core.dir/flags.make.
 
-  4. sed -i '/^CXX_FLAGS/s:$: -I*OE_BASE*/opencv-dsp-acceleration/dsp_opencv:g' modules/imgproc/CMakeFiles/opencv_imgproc.dir/flags.make
+  4. sed -i '/^CXX_FLAGS/s:$: -IOE_BASE/opencv-dsp-acceleration/dsp_opencv:g' modules/imgproc/CMakeFiles/opencv_imgproc.dir/flags.make
 
   Similarly,
 
-  5. sed -i '/^CXX_FLAGS/s:$: -I*OE_BASE*/opencv-dsp-acceleration/dsp_opencv:g' modules/core/CMakeFiles/opencv_core.dir/flags.make
+  5. sed -i '/^CXX_FLAGS/s:$: -IOE_BASE/opencv-dsp-acceleration/dsp_opencv:g' modules/core/CMakeFiles/opencv_core.dir/flags.make
 
   NOTE: Don't forget the space after '$:'. Also expand *OE_BASE* to real path.
   
