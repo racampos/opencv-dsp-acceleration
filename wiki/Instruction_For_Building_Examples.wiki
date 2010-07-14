@@ -3,160 +3,154 @@
 
 = Introduction =
 
-This page explains the building and testing procedure of the uploaded examples.
+This page explains the complete build procedure for the uploaded examples.
 
 
 = Details =
 
-It is assumed that you have a working codec-engine environment.
-The easiest way to have it through OpenEmbedded. If you have a OpenEmbedded development environment, you just need to do "#bitbake ti-codec-engine". But before that don't forget to read the Readme file at {{{<OE_BASE_DIR>}}}/sources/openembedded/recipes/ti. You may have to download some of the tools manually.
+OpenEmbedded environment will be used to build the examples. Following is the detail procedure to build this work.
 
-After you have your codec-engine environment, if you want to re-build the codec-engine examples or DSPLink examples you can follow [http://code.google.com/p/opencv-dsp-acceleration/wiki/GettingStarted1 this] for modifying your necessary Makefiles. There is some version mis-match in this page and it is recommended to follow only for Makefile changes and executing re-built examples.
+==Step 1==
+===Setting up OpenEmbedded===
 
-==Note==
-Befor you start building this example, you need the following.
+First download the OpenEmbedded setup scripts and save it. 
 
-1) OpenCV built using bitbake.
-   You need to modify some of the source files using the patch provide at  {{{Dir_You_Checked_Out}}}/dsp_opencv/patch. Therefore it is suggested that you either comment the line *INHERIT += "rm_work"* to *#INHERIT += "rm_work"* on _local.conf_ at {{{<OE_BASE_DIR>}}}/build/conf before you do *#bitbake opencv*, or use following commands to build OpenCV.
-  {{{#bitbake -f -c compile opencv}}}
+  #1 Click on this linke [http://gitorious.org/angstrom/angstrom-setup-scripts/commits/master]
+  #2 Click on *Download master as tar.gz*
+  #3 Double click on the file *angstrom-angstrom-setup-scripts-master-tar.gz* that you just downloaded.
+  #4 Then extract it to the folder of your choice. This folder will be called *BASE_DIR*.
 
-Install OpenCV package on Beagleboard, if it is not installed.
+Goto the folder *BASE_DIR* and run the provided scripts as mentioned below.
 
-2) DSPLib and IMGLib.
+  #1 cd BASE_DIR/angstrom-angstrom-setup-scripts
 
-  DSPLib can be found at [http://focus.ti.com/docs/toolsw/folders/print/sprc265.html]
+  Now, this directory will be call *OE_BASE*. ie, OE_BASE = BASE_DIR/angstrom-angstrom-setup-scripts
 
-  IMGLib can be found at [http://focus.ti.com/docs/toolsw/folders/print/sprc264.html]
+  #2 ./oebb.sh config beagleboard
+  #3 . ~/.oe/environment
+  
+  If you don't have *git* installed, you can install it using following command "sudo apt-get install git*
 
-  You can download and save them at the directory containing various tools like 'code generation tools, 'codec-engine', 'xdc-tools', etc.
+  #4 ./oebb.sh update
 
-  For example, I have saved these libraries at {{{/media/disk/OE/work/ti}}}.
+  Now, you have a complete OpenEmbedded based development environment. If you want to build the kernel image and other necessary packages, you can simply type the following on the command prompt; "bitbake base-image" or "bitbake console-image" or "bitbake x11-image". For further details look into this link [http://wiki.openembedded.org/index.php/Getting_Started].
 
-*Checkout the project using following command* 
-  svn checkout http://opencv-dsp-acceleration.googlecode.com/svn/trunk/ opencv-dsp-acceleration-read-only
+==Step 2==
+===Building OpenCV 2.1===
 
-The source-file for the example is on trunk and its subdirectories. The folder in which you checked out the project will be called "{{{DIR_YOU_CHECKED_OUT}}}".
+ The library build in this project is integrated with OpenCV 2.1. Since, we need to change the source code, it is preferred that you build the OpenCV 2.1 and retain its source and configuration files. Following command can be used to do so.(It is assumed that you are at *OE_BASE*.)
 
-==Applying OpenCV patch and re-building==
+  #1 bitbake -f -c compile opencv
 
-There is a OpenCV patch provided at  {{{DIR_YOU_CHECKED_OUT}}}/dsp_opencv/patch. Go to  the base directory containing OpenCV in the development environment. Apply the patch. For example, 
- {{{ #cd {{{<OE_BASE_DIR>}}}/build/tmp-angstrom_2008_1/work/armv7a-angstrom-linux-gnueabi/opencv-2.1.0+svnr3241-r1/opencv}}}
-  {{{#patch -p0 < {{{DIR_YOU_CHECKED_OUT}}}/dsp_opencv/patch/opencvdsp.diff }}}
+  The above command will build the OpenCV 2.1 at *OE_BASE/build/tmp-angstrom_2008_1/work/armv7a-angstrom-linux-gnueabi/opencv-2.1.0+svnr3217-r1/opencv*. Lets call this *OPENCV_BASE*.
+*Note*:- Name of folder opencv-2.1.0+svnr3217-r1 can vary depending svn revision. In this case the numbers after +svnr can be different.
 
-If that didnot work try
+  Install OpenCV package on Beagleboard, if it is not installed.
 
-  {{{#patch -p1 < {{{Dir_You_Checked_Out}}}/dsp_opencv/patch/opencvdsp.diff}}} 
+==Step 3==
+===Building Codec-Engine===
 
-Now, from the OpenCV base directory go to *modules/imgproc/CMakeFiles/opencv_imgproc.dir*
+ This project uses codec-engine 2.25.01.06 and it's dependencies, DSPLink 1.64, DSPLIB 2.10 and IMGLIB 2.0.1. Before start to bitbake for codec-engine. You need to download Code Generation Tools, ie, C6000 Code Generation Tools v6.1.9 from this link [https://www-a.ti.com/downloads/sds_support/TICodegenerationTools/download.htm] and save it to the directory *OE_BASE/source/download*. Execute the following command from *OE_BASE* to build Codec-Engine and all of its dependencies.
 
-  {{{#cd modules/imgproc/CMakeFiles/opencv_imgproc.dir}}}
+  1# bitbake ti-codec-engine
 
-Edit file *flags.make* using "gedit" and add line {{{"-I<DIR_YOU_CHECKED_OUT>/dsp_opencv" at the end of "CXX_FLAGS =".}}}
+  The codec-engine and all other required tools will be build and saved at *OE_BASE/build/tmp-angstrom_2008_1/sysroots/beagleboard-angstrom-linux-gnueabi/usr/share/ti*. This process will also build the necessary kernel modules needed to work with on-chip DSP.
 
-Similarly, edit file *link.txt* and add "-ldspopencv" in between. The part of line after adding this word will look some-what similar to "-L/media/disk/OE/build/tmp-angstrom_2008_1/sysroots/armv7a-angstrom-linux-gnueabi/usr/lib -Wl,-rpath-link *-lopencvdsp*,/media/disk/OE/build/tmp-angstrom_2008_1/sysroots/armv7a-angstrom-linux-gnueabi/usr/lib" 
+  Now download *DSPLIB* from [http://focus.ti.com/docs/toolsw/folders/print/sprc265.html] and *IMGLIB* from [http://focus.ti.com/docs/toolsw/folders/print/sprc264.html] and save it the directory where your codec-engine and its tools are saved, ie, OE_BASE/build/tmp-angstrom_2008_1/sysroots/beagleboard-angstrom-linux-gnueabi/usr/share/ti .
 
-Now,goto "modules/core/CMakeFiles/opencv_core.dir" from the OpenCV base directory and add the same as mentioned above to the files *flags.make* and *link.txt*.
+*Note*:The IMGLIB comes in .exe format. Which can be installed in windows OS. You can install the IMGLIB in windows and later copy the folder(that you get after installation) to your host linux. 
+ 
+==Step 3==
+==Checking Out and Building DSP supporting OpenCV==
 
-From the base-directory of OpenCV, issue the following commands to build the new library.
-  {{{#make opencv_imgproc/fast}}}
+It is assumed that you are at *OE_BASE*. Execute the svn check-out command to download the source of this project using following command.
+ 
+  #1 svn checkout http://opencv-dsp-acceleration.googlecode.com/svn/trunk/ opencv-dsp-acceleration
 
-  {{{#make opencv_core/fast}}}
+Now, you can see *opencv-dsp-acceleration* folder if you execute "*ls*" command.The patch is provided at *opencv-dsp-acceleration/dsp_opencv/patch*.
 
-These commands will re-build 'opencv_core' and 'opencv_imgproc' libraries which will be saved at {{{<OPENCV_BASE_DIR>}}}/lib. Now, copy these library files, libopencv_core.so, libopencv_core.so.2.1, libopencv_core.so.2.1.1, libopencv_imgproc.so, libopencv_imgproc.so.2.1 and libopencv_imgproc.so.2.1.1 to your Beagleboard at folder "/usr/lib".
+Now change directory to *OPENCV_BASE*.ie, OE_BASE/build/tmp-angstrom_2008_1/work/armv7a-angstrom-linux-gnueabi/opencv-2.1.0+svnr3217-r1/opencv .
 
+  #2 cd OE_BASE/build/tmp-angstrom_2008_1/work/armv7a-angstrom-linux-gnueabi/opencv-2.1.0+svnr3217-r1/opencv
 
-==Goto {{{BASE_DIR}}}==
+  Execute following commands to apply the patch
 
-  {{{#cd {{{DIR_YOU_CHECKED_OUT}}}/dsp_opencv}}}
+  #3 patch -p0 < OE_BASE/opencv-dsp-acceleration/dsp_opencv/patch/opencvdsp.diff
 
+  Execute following command to add base directory of this project work to the CXX_FLAGS in the files OPENCV_BASE/modules/imgproc/CMakeFiles/opencv_imgproc.dir/flags.make and OPENCV_BASE/modules/core/CMakeFiles/opencv_core.dir/flags.make.
 
-==Editing Necessary Files For this project==
+  #4 sed -i '/^CXX_FLAGS/s:$: -I*OE_BASE*/opencv-dsp-acceleration/dsp_opencv:g' modules/imgproc/CMakeFiles/opencv_imgproc.dir/flags.make
 
-Use "gedit" or "vi" to edit following files.
+  Similarly,
 
-===Rules.make===
-Change the path of various tools to point to the correct base directory. If you have one of your Rules.make file for your working DVSDK, you may probably borrow it. Don't forget to update the path for DSPLib and IMGLib.
+  #5 sed -i '/^CXX_FLAGS/s:$: -I*OE_BASE*/opencv-dsp-acceleration/dsp_opencv:g' modules/core/CMakeFiles/opencv_core.dir/flags.make
 
-===Makefile===
-In the makefile change *CODEGEN_INSTALL_DIR* and *CROSS_COMPILE* to point to the correct base directory of your DSP-side and ARM-side toolchain. Also, change *LD_DIR* to point to the /usr/bin of your OE build environment. For example, I have changed it to */media/disk/OE/build/tmp-angstrom_2008_1/sysroots/armv7a-angstrom-linux-gnueabi/usr/lib*.
+  *NOTE*: Don't forget the space after '$:'. Also expand *OE_BASE* to real path.
+  
+  Now, re-build the library.
 
-===Makefile.app===
-Change path to OpenCV header files in Makefile.app
+  #6 make opencv_imgproc/fast
+  #7 make opencv_core/fast
 
-For example, you may find *{{{OPENCV_PATH = /media/disk/openembedded/build/tmp-angstrom_2008_1/sysroots/armv7a-angstrom-linux-gnueabi/usr/include}}}* if you look at the Makefile.app. Change the path to point to the base directory containing opencv and opencv2 sub-directories that was build using bitbake.
+The new opencv_core and opencv_imgproc libraries with DSP support is built and saved at *OPENCV_BASE/lib*. These libraries are *libopencv_core.so, libopencv_core.so.2.1, libopencv_core.so.2.1.1, libopencv_imgproc.so, libopencv_imgproc.so.2.1 and libopencv_imgproc.so.2.1.1*. Now copy these libraries to your *Beagleboard*, in the folder */usr/lib*.
 
+Finally change the directory to *OE_BASE*
 
-===link.cmd===
-Go to sub-directory containing server package and edit file link.cmd.
+  #8 cd OE_BASE
 
-  {{{#cd <BASE_DIR>/beagle/server/opencv_unitserver_evm3530}}}
-
-  {{{#gedit link.cmd}}}
-
-And add following lines to this file.
-
-  -l {{{<PATH_WHERE_YOU_SAVED_DSPLIB>}}}/dsplib_v210/dsplib64plus.lib
-
-  -l {{{<PATH_WHERE_YOU_SAVED_IMGLIB>}}}/imglib_v201/lib/target/imglib2.l64P
-
-
-==Building==
-
-===Server Executable and ARM Executable===
- {{{#cd <PATH_TO_FOLDER_CONTAINING_MAKEFILE>}}} // Let us assume that this will be your BASE_DIR
-
- {{{#make codec}}}
-
- {{{#make server}}}
-
- {{{#make library}}}
-
- {{{#make app}}}
-
- {{{#make install}}}
+*Note*: This is just a temporary work-around to build OpenCV with DSP support. Once the issue with CMAKE is resolved, this can be automated by performing all the actions inside the OpenCV built which was done initially.
 
 
-The server executable will be located at
-  {{{<BASE_DIR>}}}/beagle/server/opencv_unitserver_evm3530 
-named *"opencv_unitserver_evm3530.x64P"*.
+==Step 4==
+===Building This Project===
 
-The ARM executable will be located at
-  {{{<BASE_DIR}}}/beagle/apps/opencv/linux 
-named *"remote_ti_platforms_evm3530_opencv.xv5T"*. 
+To automate the build of this project a bitbake recipe is provided at *OE_BASE/opencv-dsp-acceleration/dsp_opencv/recipe*. Copy the recipe file opencv-dsp-acceleration_svn.bb to OE_BASE/sources/openembedded/recipes/opencv
 
-The shared library will be located at 
-  {{{<BASE_DIR}}}/beagle/library/opencv/lib
-named *"libopencvdsp.so"*
+  #1 cp opencv-dsp-acceleration/dsp_opencv/recipe/opencv-dsp-acceleration_svn.bb sources/openembedded/recipes/opencv
+  
+You may need to edit the recipe depending on your path where you last downloaded and saved *DSPLIB* and *IMGLIB*. Type the following command and change the *DSPLIB_PATH* and *IMGLIB_PATH*. If you have save the DSPLIB and IMGLIB as instructed above, you may not need to change the path. Type the following commands to build the project.
 
+*Note: You will get a error message after the compilation and installation is done. Ignore this message for now. As I am still working on this recipe, I need to find out the trouble maker. But for now, you can avoid this error.Workaround to this is manually building the project. But, manually editing the makefiles and building the project is too time consuming and even prone to error. To do manual work look into svn revision 113 of this instruction. To look at this instruction click on Source tab, then on Changes sub-tab and on r113. The error message will look like the following. If you get any other error not similar as shown below, then it can't be avoided.*
+
+  #2  bitbake -b opencv-dsp-acceleration_svn.bb
+
+This will build the DSP executable *opencv_unitserver_evm3530.x64P*, Arm-side shared library *lib/libopencvdsp.so* and Arm executable *remote_ti_platforms_evm3530_opencv.xv5T*. The two executables and lib folder will be located at *OE_BASE/build/tmp-angstrom_2008_1/work/beagleboard-angstrom-linux-gnueabi/opencv-dsp-acceleration-0+svnr113-r0/package/usr/share/ti/opencv-dsp*. Now,*copy opencv_unitserver_evm3530.x64P, remote_ti_platforms_evm3530_opencv.xv5T to the Beagleboard  at your work directory. Lets call this directory WORK_DIR. Copy lib/libopencvdsp.so to the Beagleboard at /usr/lib*. Also, copy the movie clip tree.avi found on the folder where the executables were found to the *WORK_DIR*.
+
+
+==Step 5==
+===Restart Beagleboard and set-up memory===
+The memory-map for DSP is just temporary and will be matched later with that of ti-gstreamer.
 
 ==Set Memory for Linux==
 
 Before booting up the beagleboard, set aside memory for linux not greater than 128M from uboot prompt.
   OMAP3 beagleboard.org # setenv bootargs console=${console} vram=${vram} mapfb.mode=dvi:${dvimode} omapfb.debug=y omapdss.def_disp=${defaultdisplay} root=${mmcroot} rootfstype=${mmcrootfstype} mem=128M 
 
-==Copy Files and Executables to Beagleboard==
+==Copy Kernel Modules for DSPLink==
 
-Copy  *opencv_unitserver_evm3530.x64P* and *remote_ti_platforms_evm3530_opencv.xv5T*  to your beagleboard at the same base directory. If you have already executed *#make install*, executables will be copied for you if your host is nfs mounted over Beagleboard. However, to use this command the *EXEC_DIR* variable should be properly set in Rules.make. Also, copy the ARM side library that you just build, libopencvdsp.so, to the Beagleboard at '/usr/lib'.
+Copy the kernel modules to the *WORK_DIR* on Beagleboard.
+These modules can be found at *OE_BASE/build/tmp-angstrom_2008_1/sysroots/beagleboard-angstrom-linux-gnueabi/lib/modules/2.6.32/kernel/drivers/dsp*.
 
-Load all the kernel modules necessary, like dsplinkk.ko, lpm_omap3530.ko, cmemk.ko.
+Load all the kernel modules dsplinkk.ko, lpm_omap3530.ko and cmemk.ko.
 
-You can also load these modules using the script in the scripts directory. 
-If you are using your own script, please check the buffer size. Memory region allocated to CMEM should not overlap with that allocated to the operating system.
+You can also these modules using the script *loadmodules.sh* provided in the *OE_BASE/opencv-dsp-acceleration/dsp_opencv/scripts*. To unload the module *unloadmodules.sh* is provided in the same folder.
 
-==Execute==
+==Step 6==
+===Execute===
 Simply type the following command to execute. This will show the usage of the command. You can follow the usage after that. To toggle between DSP and ARM you can either export *OPENCVDSP* as 1 or 0 to environment variable.
 
-*#OPENCVDSP=1 ./remote_ti_platforms_evm3530_opencv.xv5T* // For using DSP and ARM
+*1# OPENCVDSP=1 ./remote_ti_platforms_evm3530_opencv.xv5T* // For using DSP and ARM
 
-*#OPENCVDSP=0 ./remote_ti_platforms_evm3530_opencv.xv5T* // For using ARM only
+*2# OPENCVDSP=0 ./remote_ti_platforms_evm3530_opencv.xv5T* // For using ARM only
 
 ====Note====
-1) To test the example you may need to copy the test data files at {{{<BASE_DIR>}}}/beagle/apps/opencv/test_data or need to have a webcam. I have tested the app using Logitech webcam Pro 9000 to demonstrate sobel algorithm.
+1) To test the example you may need to copy the test data file *tree.avi* as mentioned above or need to have a webcam. I have tested the app using Logitech webcam Pro 9000 to demonstrate sobel algorithm.
 
 2) The example demonstrates 2-D 16x16 forward DFT. The output data is scaled and displayed on the screen.
 
-3) The example demonstrated 3x3 sobel algorithm. Due to low visibility of signed-image in using cvShowImage(), the image is converted back to unsigned and then displayed.
+3) The example demonstrated 3x3 sobel algorithm. Due to low visibility of signed-image using cvShowImage(), the image is converted back to unsigned and then displayed.
 
-To test different sobel filter and different DFT types supported, you need to modify the 'app.c' accordingly. 
+5) The example also demonstrates 7x7 sobel for input movie clip tree.avi.
 
+6) Integral algorithm is demonstrated for input data taken from *Learning OpenCV by Gary Bradski and Adrian Kaehler*. The result is coherent with that shown in this text book, however it is not same as the Arm-only execution.
  
