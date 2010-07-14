@@ -180,11 +180,11 @@ You can also these modules using the script *loadmodules.sh* provided in the *OE
 ===Execute===
 Type the following command to execute. This will show the usage of the command. You can follow the usage after that. To toggle between DSP and ARM you can either export *OPENCVDSP* as 1 or 0 to environment variable.
 
-*#1 cd WORK_DIR
+  1.* cd WORK_DIR
 
-*#2 OPENCVDSP=1 ./remote_ti_platforms_evm3530_opencv.xv5T* // For using DSP and ARM
+  2.* OPENCVDSP=1 ./remote_ti_platforms_evm3530_opencv.xv5T* // For using DSP and ARM
 
-*#3 OPENCVDSP=0 ./remote_ti_platforms_evm3530_opencv.xv5T* // For using ARM only
+  3.* OPENCVDSP=0 ./remote_ti_platforms_evm3530_opencv.xv5T* // For using ARM only
 
 ====Note====
 1) To test the example you may need to copy the test data file *tree.avi* as mentioned above or need to have a webcam. I have tested the app using Logitech webcam Pro 9000 to demonstrate sobel algorithm.
