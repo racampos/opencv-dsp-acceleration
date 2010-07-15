@@ -62,7 +62,7 @@ Goto the folder *BASE_DIR* and run the provided scripts as mentioned below.
 
   The codec-engine and all other required tools will be build and saved at *OE_BASE/build/tmp-angstrom_2008_1/sysroots/beagleboard-angstrom-linux-gnueabi/usr/share/ti*. This process will also build the necessary kernel modules needed to work with on-chip DSP found on OMAP3530.
 
-  Now download ~~*DSPLIB* for Linux from [http://focus.ti.com/docs/toolsw/folders/print/sprc265.html] and~~ *IMGLIB* for Windows OS from [http://focus.ti.com/docs/toolsw/folders/print/sprc264.html] and save it in the directory where your codec-engine and its tools are saved, ie, OE_BASE/build/tmp-angstrom_2008_1/sysroots/beagleboard-angstrom-linux-gnueabi/usr/share/ti. ~~Untar the DSPLIB in this folder.~~
+  Now download *IMGLIB* for Windows OS from [http://focus.ti.com/docs/toolsw/folders/print/sprc264.html] and save it in the directory where your codec-engine and its tools are saved, ie, OE_BASE/build/tmp-angstrom_2008_1/sysroots/beagleboard-angstrom-linux-gnueabi/usr/share/ti.
 
 *Note*:The IMGLIB comes in .exe format. Which can be installed in windows OS. You can install the IMGLIB in windows and later copy the folder(that you get after installation) to your host linux at folder mentioned above. 
  
@@ -115,49 +115,15 @@ To automate the build of this project a bitbake recipe is provided at *OE_BASE/o
 
   ==={{{ # }}} cp opencv-dsp-acceleration/dsp_opencv/recipe/opencv-dsp-acceleration_svn.bb sources/openembedded/recipes/opencv===
   
-You may need to edit this recipe depending on your path where you last downloaded and saved ~~*DSPLIB* and~~ *IMGLIB*. Type the following command and change the ~~*DSPLIB_PATH* and~~ *IMGLIB_PATH* to point to the correct folder. 
+You may need to edit this recipe depending on your path where you last downloaded and saved *IMGLIB*. Type the following command and change the *IMGLIB_PATH* to point to the correct folder. 
 
   ==={{{ # }}} gedit sources/openembedded/recipes/opencv/opencv-dsp-acceleration_svn.bb===
 
-If you have saved the ~~DSPLIB and~~ IMGLIB as instructed above, you may not need to change the path. Type the following commands to build the project.
+If you have saved the IMGLIB as instructed above, you may not need to change the path. Type the following commands to build the project.
 
   ==={{{ # }}}  bitbake -b opencv-dsp-acceleration_svn.bb===
 
-
-~~*Note: You will get a error message after the compilation and installation is done. Ignore this message for now. As I am still working on this recipe, I need to trace out the trouble maker. But for now, you can avoid this error.Workaround to this is manually building the project. But, manually editing the makefiles and building the project is too time consuming and even prone to error. To do manual work look into svn revision 113 of this instruction. To look at this instruction click on Source tab, then on Changes sub-tab and on r113. The error message will look like the following. If you get any other error not similar as shown below, then it can't be avoided.*~~
-~~
-NOTE: package opencv-dsp-acceleration-0+svnr113-r0: task do_compile: Started
-NOTE: package opencv-dsp-acceleration-0+svnr113-r0: task do_compile: Succeeded
-NOTE: Running task 9 of 19 (ID: 2, /media/disk/openembedded/sources/openembedded/recipes/opencv/opencv-dsp-acceleration_svn.bb, do_install)
-NOTE: package opencv-dsp-acceleration-0+svnr113-r0: task do_install: Started
-NOTE: package opencv-dsp-acceleration-0+svnr113-r0: task do_install: Succeeded
-NOTE: Running task 10 of 19 (ID: 13, /media/disk/openembedded/sources/openembedded/recipes/opencv/opencv-dsp-acceleration_svn.bb, do_package)
-NOTE: Running task 11 of 19 (ID: 3, /media/disk/openembedded/sources/openembedded/recipes/opencv/opencv-dsp-acceleration_svn.bb, do_populate_sysroot)
-NOTE: package opencv-dsp-acceleration-0+svnr113-r0: task do_package: Started
-NOTE: package opencv-dsp-acceleration-0+svnr113-r0: task do_populate_sysroot: Started
-NOTE: package opencv-dsp-acceleration-0+svnr113-r0: task do_populate_sysroot: Succeeded
-NOTE: Running task 12 of 19 (ID: 11, /media/disk/openembedded/sources/openembedded/recipes/opencv/opencv-dsp-acceleration_svn.bb, do_qa_staging)
-NOTE: package opencv-dsp-acceleration-0+svnr113-r0: task do_qa_staging: Started
-NOTE: package opencv-dsp-acceleration-0+svnr113-r0: task do_qa_staging: Succeeded
-NOTE: Couldn't find shared library provider for libopencvdsp.so
-NOTE: package opencv-dsp-acceleration-sourcetree skipped
-ERROR: QA Issue with opencv-dsp-acceleration: No GNU_HASH in the elf binary: '/media/disk/openembedded/build/tmp-angstrom_2008_1/work/beagleboard-angstrom-linux-gnueabi/opencv-dsp-acceleration-0+svnr113-r0/packages-split/opencv-dsp-acceleration/usr/share/ti/opencv-dsp/remote_ti_platforms_evm3530_opencv.xv5T'
-ERROR: QA Issue with opencv-dsp-acceleration: No GNU_HASH in the elf binary: '/media/disk/openembedded/build/tmp-angstrom_2008_1/work/beagleboard-angstrom-linux-gnueabi/opencv-dsp-acceleration-0+svnr113-r0/packages-split/opencv-dsp-acceleration/usr/share/ti/opencv-dsp/lib/libopencvdsp.so'
-FATAL: QA run found fatal errors. Please consider fixing them.
-ERROR: Error in executing python function in: /media/disk/openembedded/sources/openembedded/recipes/opencv/opencv-dsp-acceleration_svn.bb
-ERROR: Exception:<type 'exceptions.SystemExit'> Message:1
-ERROR: Printing the environment of the function
-ERROR: Function do_package_qa failed
-ERROR: TaskFailed event exception, aborting
-ERROR: Build of /media/disk/openembedded/sources/openembedded/recipes/opencv/opencv-dsp-acceleration_svn.bb do_package failed
-ERROR: QA Issue with opencv-dsp-acceleration: No GNU_HASH in the elf binary: '/media/disk/openembedded/build/tmp-angstrom_2008_1/work/beagleboard-angstrom-linux-gnueabi/opencv-dsp-acceleration-0+svnr113-r0/packages-split/opencv-dsp-acceleration/usr/share/ti/opencv-dsp/remote_ti_platforms_evm3530_opencv.xv5T'
-ERROR: Task 13 (/media/disk/openembedded/sources/openembedded/recipes/opencv/opencv-dsp-acceleration_svn.bb, do_package) failed with 256
-ERROR: '/media/disk/openembedded/sources/openembedded/recipes/opencv/opencv-dsp-acceleration_svn.bb' failed
-ERROR: QA Issue with opencv-dsp-acceleration: No GNU_HASH in the elf binary: '/media/disk/openembedded/build/tmp-angstrom_2008_1/work/beagleboard-angstrom-linux-gnueabi/opencv-dsp-acceleration-0+svnr113-r0/packages-split/opencv-dsp-acceleration/usr/share/ti/opencv-dsp/lib/libopencvdsp.so'
-FATAL: QA run found fatal errors. Please consider fixing them.
-~~
-
-This will build the DSP executable *opencv_unitserver_evm3530.x64P*, Arm-side shared library *lib/libopencvdsp.so* and Arm executable *remote_ti_platforms_evm3530_opencv.xv5T*. The two executables and lib folder will be located at ~~*OE_BASE/build/tmp-angstrom_2008_1/work/beagleboard-angstrom-linux-gnueabi/opencv-dsp-acceleration-0+svnr113-r0/package/usr/share/ti/opencv-dsp*~~ *OE_BASE/build/tmp-angstrom_2008_1/sysroots/beagleboard-angstrom-linux-gnueabi/usr/share/ti/opencv-dsp*. Now,copy *opencv_unitserver_evm3530.x64P, remote_ti_platforms_evm3530_opencv.xv5T* to the *Beagleboard*  at your work directory. Lets call this directory *WORK_DIR*. Copy *lib/libopencvdsp.so* to the Beagleboard at */usr/lib*. Also, copy the movie clip *tree.avi* found on the folder ~~*OE_BASE/build/tmp-angstrom_2008_1/work/beagleboard-angstrom-linux-gnueabi/opencv-dsp-acceleration-0+svnr113-r0/package/usr/share/ti/opencv-dsp*~~ *OE_BASE/build/tmp-angstrom_2008_1/sysroots/beagleboard-angstrom-linux-gnueabi/usr/share/ti/opencv-dsp*, to the *WORK_DIR*.
+This will build the DSP executable *opencv_unitserver_evm3530.x64P*, Arm-side shared library *lib/libopencvdsp.so* and Arm executable *remote_ti_platforms_evm3530_opencv.xv5T*. The two executables and lib folder will be located at *OE_BASE/build/tmp-angstrom_2008_1/sysroots/beagleboard-angstrom-linux-gnueabi/usr/share/ti/opencv-dsp*. Now,copy *opencv_unitserver_evm3530.x64P, remote_ti_platforms_evm3530_opencv.xv5T* to the *Beagleboard*  at your work directory. Lets call this directory *WORK_DIR*. Copy *lib/libopencvdsp.so* to the Beagleboard at */usr/lib*. Also, copy the movie clip *tree.avi* found on the folder *OE_BASE/build/tmp-angstrom_2008_1/sysroots/beagleboard-angstrom-linux-gnueabi/usr/share/ti/opencv-dsp*, to the *WORK_DIR*.
 
 
 ==Step 6==
