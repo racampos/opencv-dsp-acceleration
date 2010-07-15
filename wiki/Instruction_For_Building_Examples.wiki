@@ -17,7 +17,7 @@ First download the OpenEmbedded setup scripts and save it.
 
   {{{ # }}} Click on this link [http://gitorious.org/angstrom/angstrom-setup-scripts/commits/master]
 
- {{{ # }}} Click on *Download master as tar.gz*
+ {{{ # }}} Click on *Download master as tar.gz*. This will download and save file "angstrom-angstrom-setup-scripts-master-tar.gz".
 
   {{{ # }}} Double click on the file *angstrom-angstrom-setup-scripts-master-tar.gz* that you just downloaded.
 
@@ -33,7 +33,7 @@ Goto the folder *BASE_DIR* and run the provided scripts as mentioned below.
 
   {{{ # }}} . ~/.oe/environment
   
-  If you don't have *git* installed, you can install it using following command "sudo apt-get install git*
+  The script to set-up OpenEmbedded environment uses 'git'. If you don't have *git* installed, you can install it using following command "sudo apt-get install git*
 
   {{{ # }}} ./oebb.sh update
 
@@ -44,7 +44,7 @@ Goto the folder *BASE_DIR* and run the provided scripts as mentioned below.
 ==Step 2==
 ===Building OpenCV 2.1===
 
- The library build in this project is integrated with OpenCV 2.1. Since, we need to change the source code, it is preferred that you build the OpenCV 2.1 and retain its source and configuration files. Following command can be used to do so.(It is assumed that you are at *OE_BASE*.)
+ The library built in this project is integrated with OpenCV 2.1. Since, we need to change the source code, it is preferred that you build the OpenCV 2.1 and retain its source and configuration files. Following command can be used to do so.(It is assumed that you are at *OE_BASE*.)
 
   {{{ # }}} bitbake -f -c compile opencv
 
@@ -56,17 +56,17 @@ Goto the folder *BASE_DIR* and run the provided scripts as mentioned below.
 ==Step 3==
 ===Building Codec-Engine===
 
- This project uses codec-engine 2.25.01.06 and it's dependencies, DSPLink 1.64, DSPLIB 2.10 and IMGLIB 2.0.1. Before you start bitbaking codec-engine, you need to download Code Generation Tools, ie, C6000 Code Generation Tools v6.1.9 from this link [https://www-a.ti.com/downloads/sds_support/TICodegenerationTools/download.htm] and save it to the directory *OE_BASE/source/download*. Execute the following command from *OE_BASE* to build Codec-Engine and all of its dependencies.
+ This project uses codec-engine 2.25.01.06 and it's dependencies, DSPLink 1.64, DSPLIB 2.10 and IMGLIB 2.0.1. Before you start bitbaking codec-engine, you need to download Code Generation Tools, ie, C6000 Code Generation Tools v6.1.9 for Linux from this link [https://www-a.ti.com/downloads/sds_support/TICodegenerationTools/download.htm] and save it to the directory *OE_BASE/source/download*. Execute the following command from *OE_BASE* to build Codec-Engine and all of its dependencies.
 
   {{{ # }}} bitbake ti-codec-engine
 
-  The codec-engine and all other required tools will be build and saved at *OE_BASE/build/tmp-angstrom_2008_1/sysroots/beagleboard-angstrom-linux-gnueabi/usr/share/ti*. This process will also build the necessary kernel modules needed to work with on-chip DSP.
+  The codec-engine and all other required tools will be build and saved at *OE_BASE/build/tmp-angstrom_2008_1/sysroots/beagleboard-angstrom-linux-gnueabi/usr/share/ti*. This process will also build the necessary kernel modules needed to work with on-chip DSP found on OMAP3530.
 
-  Now download *DSPLIB* from [http://focus.ti.com/docs/toolsw/folders/print/sprc265.html] and *IMGLIB* from [http://focus.ti.com/docs/toolsw/folders/print/sprc264.html] and save it in the directory where your codec-engine and its tools are saved, ie, OE_BASE/build/tmp-angstrom_2008_1/sysroots/beagleboard-angstrom-linux-gnueabi/usr/share/ti .
+  Now download *DSPLIB* for Linux from [http://focus.ti.com/docs/toolsw/folders/print/sprc265.html] and *IMGLIB* for Windows OS from [http://focus.ti.com/docs/toolsw/folders/print/sprc264.html] and save it in the directory where your codec-engine and its tools are saved, ie, OE_BASE/build/tmp-angstrom_2008_1/sysroots/beagleboard-angstrom-linux-gnueabi/usr/share/ti. Untar the DSPLIB in this folder.
 
-*Note*:The IMGLIB comes in .exe format. Which can be installed in windows OS. You can install the IMGLIB in windows and later copy the folder(that you get after installation) to your host linux. 
+*Note*:The IMGLIB comes in .exe format. Which can be installed in windows OS. You can install the IMGLIB in windows and later copy the folder(that you get after installation) to your host linux at folder mentioned above. 
  
-==Step 3==
+==Step 4==
 ==Checking Out the Project and Building DSP Support for OpenCV==
 
 It is assumed that you are at *OE_BASE*. Execute the svn check-out command to download the source of this project using following command.
@@ -91,30 +91,31 @@ Now change directory to *OPENCV_BASE*.ie, OE_BASE/build/tmp-angstrom_2008_1/work
 
   {{{ # }}} sed -i '/^CXX_FLAGS/s:$: -IOE_BASE/opencv-dsp-acceleration/dsp_opencv:g' modules/core/CMakeFiles/opencv_core.dir/flags.make
 
-  NOTE: Don't forget the space after '$:'. Also expand *OE_BASE* to real path.
+  NOTE: Don't forget the space after '$:' in the commands above. Also expand *OE_BASE* to real path.
   
   Now, re-build the library.
 
   {{{ # }}} make opencv_imgproc/fast
+
   {{{ # }}} make opencv_core/fast
 
-The new opencv_core and opencv_imgproc libraries with DSP support is built and saved at *OPENCV_BASE/lib*. These libraries are *libopencv_core.so, libopencv_core.so.2.1, libopencv_core.so.2.1.1, libopencv_imgproc.so, libopencv_imgproc.so.2.1 and libopencv_imgproc.so.2.1.1*. Now copy these libraries to your *Beagleboard*, in the folder */usr/lib*.
+The new opencv_imgproc and opencv_core libraries with DSP support are built and saved at *OPENCV_BASE/lib*. These libraries are *libopencv_core.so, libopencv_core.so.2.1, libopencv_core.so.2.1.1, libopencv_imgproc.so, libopencv_imgproc.so.2.1 and libopencv_imgproc.so.2.1.1*. Now copy these libraries to your *Beagleboard*, in the folder */usr/lib*.
 
 Finally change the directory to *OE_BASE*
 
   {{{ # }}} cd OE_BASE
 
-*Note*: This is just a temporary work-around to build OpenCV with DSP support. Once the issue with CMAKE is resolved, this can be automated by performing all the actions inside the OpenCV built which was done initially.
+*Note*:All you did in this step 4 is a temporary work-around to build OpenCV with DSP support. Once the issue with CMAKE is resolved, this can be automated by performing all the actions inside the OpenCV built which was done initially in step 2.
 
 
-==Step 4==
+==Step 5==
 ===Building This Project===
 
 To automate the build of this project a bitbake recipe is provided at *OE_BASE/opencv-dsp-acceleration/dsp_opencv/recipe*. Copy the recipe file opencv-dsp-acceleration_svn.bb to OE_BASE/sources/openembedded/recipes/opencv
 
   ==={{{ # }}} cp opencv-dsp-acceleration/dsp_opencv/recipe/opencv-dsp-acceleration_svn.bb sources/openembedded/recipes/opencv===
   
-You may need to edit the recipe depending on your path where you last downloaded and saved *DSPLIB* and *IMGLIB*. Type the following command and change the *DSPLIB_PATH* and *IMGLIB_PATH*. 
+You may need to edit this recipe depending on your path where you last downloaded and saved *DSPLIB* and *IMGLIB*. Type the following command and change the *DSPLIB_PATH* and *IMGLIB_PATH* to point to the correct folder. 
 
   ==={{{ # }}} gedit sources/openembedded/recipes/opencv/opencv-dsp-acceleration_svn.bb===
 
@@ -156,11 +157,11 @@ ERROR: QA Issue with opencv-dsp-acceleration: No GNU_HASH in the elf binary: '/m
 FATAL: QA run found fatal errors. Please consider fixing them.
 }}}
 
-This will build the DSP executable *opencv_unitserver_evm3530.x64P*, Arm-side shared library *lib/libopencvdsp.so* and Arm executable *remote_ti_platforms_evm3530_opencv.xv5T*. The two executables and lib folder will be located at *OE_BASE/build/tmp-angstrom_2008_1/work/beagleboard-angstrom-linux-gnueabi/opencv-dsp-acceleration-0+svnr113-r0/package/usr/share/ti/opencv-dsp*. Now,*copy opencv_unitserver_evm3530.x64P, remote_ti_platforms_evm3530_opencv.xv5T to the Beagleboard  at your work directory. Lets call this directory WORK_DIR. Copy lib/libopencvdsp.so to the Beagleboard at /usr/lib*. Also, copy the movie clip tree.avi found on the folder where the executables were found to the *WORK_DIR*.
+This will build the DSP executable *opencv_unitserver_evm3530.x64P*, Arm-side shared library *lib/libopencvdsp.so* and Arm executable *remote_ti_platforms_evm3530_opencv.xv5T*. The two executables and lib folder will be located at *OE_BASE/build/tmp-angstrom_2008_1/work/beagleboard-angstrom-linux-gnueabi/opencv-dsp-acceleration-0+svnr113-r0/package/usr/share/ti/opencv-dsp*. Now,copy *opencv_unitserver_evm3530.x64P, remote_ti_platforms_evm3530_opencv.xv5T* to the *Beagleboard*  at your work directory. Lets call this directory *WORK_DIR*. Copy *lib/libopencvdsp.so* to the Beagleboard at */usr/lib*. Also, copy the movie clip *tree.avi* found on the folder *OE_BASE/build/tmp-angstrom_2008_1/work/beagleboard-angstrom-linux-gnueabi/opencv-dsp-acceleration-0+svnr113-r0/package/usr/share/ti/opencv-dsp*, to the *WORK_DIR*.
 
 
-==Step 5==
-===Restart Beagleboard and set-up memory===
+==Step 6==
+===Restart Beagleboard and Set-up Memory===
 The memory-map for DSP is just temporary and will be matched later with that of ti-gstreamer.
 
 ===Set Memory for Linux===
@@ -175,27 +176,27 @@ These modules can be found at *OE_BASE/build/tmp-angstrom_2008_1/sysroots/beagle
 
 Load all the kernel modules dsplinkk.ko, lpm_omap3530.ko and cmemk.ko.
 
-You can also these modules using the script *loadmodules.sh* provided in the *OE_BASE/opencv-dsp-acceleration/dsp_opencv/scripts*. To unload the module *unloadmodules.sh* is provided in the same folder. Copy these files to your WORK_DIR in Beagleboard and type following 
+You can also load these modules using the script *loadmodules.sh* provided in the *OE_BASE/opencv-dsp-acceleration/dsp_opencv/scripts*. To unload the modules, *unloadmodules.sh* is provided in the same folder. Copy these files to your WORK_DIR in Beagleboard and type following 
   {{{ $ }}} ./loadmoudles.sh
 
-==Step 6==
+==Step 7==
 ===Execute===
 Type the following command to execute. This will show the usage of the command. You can follow the usage after that. To toggle between DSP and ARM you can either export *OPENCVDSP* as 1 or 0 to environment variable.
 
   {{{ $ }}} cd WORK_DIR
 
-  {{{ $ }}}* OPENCVDSP=1 ./remote_ti_platforms_evm3530_opencv.xv5T* // For using DSP and ARM
+  {{{ $ }}}* OPENCVDSP=1 ./remote_ti_platforms_evm3530_opencv.xv5T*            // For using DSP and ARM
 
-  {{{ $ }}}* OPENCVDSP=0 ./remote_ti_platforms_evm3530_opencv.xv5T* // For using ARM only
+  {{{ $ }}}* OPENCVDSP=0 ./remote_ti_platforms_evm3530_opencv.xv5T*           // For using ARM only
 
 ====Note====
-1) To test the example you may need to copy the test data file *tree.avi* as mentioned above or need to have a webcam. I have tested the app using Logitech webcam Pro 9000 to demonstrate sobel algorithm.
+1) To test the example you may need to copy the test data file *tree.avi* as mentioned above or need to have a webcam. I have tested the app using Logitech webcam Pro 9000 to demonstrate Sobel algorithm.
 
 2) The example demonstrates 2-D 16x16 forward DFT. The output data is scaled and displayed on the screen.
 
-3) The example demonstrated 3x3 sobel algorithm. Due to low visibility of signed-image using cvShowImage(), the image is converted back to unsigned and then displayed.
+3) The example also demonstrates 3x3 Sobel algorithm for frames captured using webcam. Due to low visibility of signed-image when using cvShowImage(), the image is converted back to unsigned and then displayed.
 
-5) The example also demonstrates 7x7 sobel for input movie clip tree.avi.
+5) The example also demonstrates 7x7 Sobel algorithm for input movie clip tree.avi.
 
-6) Integral algorithm is demonstrated for input data taken from *Learning OpenCV by Gary Bradski and Adrian Kaehler*. The result is coherent with that shown in this text book, however it is not same as the Arm-only execution.
+6) Integral algorithm is demonstrated for input data taken from *Learning OpenCV* by *Gary Bradski and Adrian Kaehler*. The result is coherent with that shown in this text book, however it is not same as the Arm-only execution.
  
