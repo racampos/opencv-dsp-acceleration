@@ -111,11 +111,11 @@ Finally change the directory to *OE_BASE*
 =Step 5=
 ===Building This Project===
 
-To automate the build of this project a bitbake recipe is provided at *OE_BASE/opencv-dsp-acceleration/dsp_opencv/recipe*. Copy the recipe file opencv-dsp-acceleration_svn.bb to OE_BASE/sources/openembedded/recipes/opencv
+To automate the build of this project a bitbake recipe is provided at ~~*OE_BASE/opencv-dsp-acceleration/dsp_opencv/recipe*. Copy the recipe file opencv-dsp-acceleration_svn.bb to~~ OE_BASE/sources/openembedded/recipes/opencv.
 
-  ==={{{ # }}} cp opencv-dsp-acceleration/dsp_opencv/recipe/opencv-dsp-acceleration_svn.bb sources/openembedded/recipes/opencv===
+  ~~==={{{ # }}} cp opencv-dsp-acceleration/dsp_opencv/recipe/opencv-dsp-acceleration_svn.bb sources/openembedded/recipes/opencv===~~
   
-You may need to edit this recipe depending on your path where you last downloaded and saved *IMGLIB*. Type the following command and change the *IMGLIB_PATH* to point to the correct folder. 
+You may need to edit this recipe, *opencv-dsp-acceleration_svn.bb*, depending on your path where you last downloaded and saved *IMGLIB*. Type the following command and change the *IMGLIB_PATH* to point to the correct folder. 
 
   ==={{{ # }}} gedit sources/openembedded/recipes/opencv/opencv-dsp-acceleration_svn.bb===
 
