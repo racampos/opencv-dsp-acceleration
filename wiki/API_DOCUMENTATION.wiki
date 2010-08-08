@@ -12,6 +12,8 @@ All introduced API names starts with *{{{DSP_}}}* followed by OpenCV API name. T
 
 Three of the APIs, namely *DSP_cvStartDSP( void )*, *DSP_cvEndDSP(void)* and *DSP_cvSyncDSP( void )* are completely new API which is not related to original OpenCV. These APIs are used to setup DSP(make it ready for operation), to shut down DSP after all processing is completed and to synchronize ARM and DSP processor respectively.
 
+===Note:- The memroy allocated for this API should be continious in physical address space. A patch is provided in the patch folder in base directory which could be applied to OpenCV 2.1 alloc.c file in opencv/modules/core/src. This patch should be applied and the library libopencv_core.so should be re-compiled. This new library will now allocate memory from continuous region. cvAlloc() can be used to request continious memory block if need in your application later.===
+
 This work introduces following API's.
 
 = Introduced API's =
