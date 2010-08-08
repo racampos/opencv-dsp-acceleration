@@ -24,14 +24,14 @@ This API should be used before any other API call is used. It performs all the n
 
 This API should be the last function call to DSP. This is a mandatory function call that should be performed at the end when DSP function calls will no longer be made. This API close the DSP side engine and shut down the DSP after releasing buffers that were internally used to set up DSP calls.
 
-===void DSP_cvSobel( const CvArr* srcarr, CvArr* dstarr, int dx, int dy, int aperture_size )=== 
+==={{{void DSP_cvSobel( const CvArr* srcarr, CvArr* dstarr, int dx, int dy, int aperture_size )}}}=== 
 
 This API call is similar to *cvSobel()* API of OpenCV. Same restriction applies to this API as that of cvSobel(). Other added restriction are as follows
 
   #1 dx and dy should be equal to 1.(It can currently perform 1st order sobel derivative. Support for other order will be added later.)
   #2 aperture_size should be equal to 3.(It can currently perform 3x3 sobel filter operation. Support for other size of filter will be added later.)
 
-===void DSP_cvDFT( const CvArr* srcarr, CvArr* dstarr, int flags, int nonzero_rows )===
+==={{{void DSP_cvDFT( const CvArr* srcarr, CvArr* dstarr, int flags, int nonzero_rows )}}}===
 
 This API call is similar to *cvDFT()* API of OpenCV. Same restriction applies to this API as that of cvDFT(). Other added restriction are as follows.
 
@@ -40,7 +40,7 @@ This API call is similar to *cvDFT()* API of OpenCV. Same restriction applies to
   #3 Input and output matrix or image should be 2 channel floating point. 
   #4 The output data need to be scaled. 
 
-===void DSP_cvIntegral( const CvArr* image, CvArr* sumImage, CvArr* sumSqImage, CvArr* tiltedSumImage )===
+==={{{void DSP_cvIntegral( const CvArr* image, CvArr* sumImage, CvArr* sumSqImage, CvArr* tiltedSumImage )}}}===
 
 This API call is similar to *cvIntegral()* API of OpenCV. Same restriction applies to this API as that of cvIntegral(). Other added restriction are as follows.
 
@@ -48,16 +48,16 @@ This API call is similar to *cvIntegral()* API of OpenCV. Same restriction appli
   #2 The output image is single channel 32-bit image with same number of columns and rows. 
 
 
-===void DSP_cvCvtColor( const CvArr* srcarr, CvArr* dstarr, int code )===
+==={{{void DSP_cvCvtColor( const CvArr* srcarr, CvArr* dstarr, int code )}}}===
 
 This API call is similar to *cvCvtColor()* API of OpenCV. Same restriction applies to this API as that of cvSobel(). Other added restriction are as follows.
   
   #1 This API only performs CV_RGB2GRAY. Thus code should be CV_RGB2GRAY
 
-===void DSP_cvCvtColor_cvSobel( const CvArr* srcarr, CvArr* dstarr, int code, const void* srcarr_s, void* dstarr_s, int dx, int dy, int aperture_size )===
+==={{{void DSP_cvCvtColor_cvSobel( const CvArr* srcarr, CvArr* dstarr, int code, const void* srcarr_s, void* dstarr_s, int dx, int dy, int aperture_size )}}}===
 
 This API call performs DSP_cvCvtColor() and DSP_cvSobel() in a single function call. This reduces the communication overhead between ARM and DSP. Same restriction applies to this call as that ot DSP_cvCvtColor() and DSP_cvSobel().
 
-===void DSP_cvSyncDSP( void )===
+==={{{void DSP_cvSyncDSP( void )}}}===
 
 This API call is used to synchronize the operation between ARM and DSP. As all the API above are asynchronous call to DSP, this API should be calle before the output data from other API call is referenced to maintain data coherency.
