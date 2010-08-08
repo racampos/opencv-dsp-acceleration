@@ -1,4 +1,4 @@
-#summary Building and testing this project
+#summary Building and testing this project along with setting up development environment on BeagleBoard based on OpenEmbedded.
 
 
 = Introduction =
