@@ -1,5 +1,4 @@
-
-#comments Benchmarking of DSP accelerated OpenCV algorithm.
+#summary Benchmarking of DSP accelerated OpenCV algorithm.
 
 = Introduction =
 
