@@ -1,0 +1,14 @@
+#summary Procedure to add new algorithms
+
+= Introduction =
+
+This page describes the complete procedure to add new algorithms to this library. 
+Also, a brief discussion on internal functions, necessary structures will be done.
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
