@@ -1,4 +1,4 @@
-#summary Procedure to setup tools like DSPLink and Codec-Engine.
+#summary Procedure to setup tools like DSPLink and Codec-Engine outside OpenEmbedded environment.
 This wiki-page describes the required setup for installing and building DSPLink and Codec-Engine.
 
 =Note=
