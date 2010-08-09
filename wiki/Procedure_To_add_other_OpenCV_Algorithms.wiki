@@ -10,7 +10,7 @@ It is important to note that OpenCV_DSP is implemented on library [http:// *C6ac
 
 Name of any OpenCV API, that is to be ported to DSP will begin with *{{{DSP_}}}*.
 All files, whether it is header file or source file, are stored in folder *beagle/library/opencv*.
-
+-----
 ===Data Types===
 OpenCV_DSP uses 2 new data types. It is tried best to make these data types consistent with OpenCV. This new types are *DSP_Mat* and *DSP_Flags*.
 
@@ -43,11 +43,11 @@ The *DSP_Flags* is defined as follows,
 }}}
 This structure stores all the flags passed to OpenCV_DSP APIs. For example, in the case of DSP_cvSobel( const CvArr* srcarr, CvArr* dstarr, int dx, int dy, int aperture_size ),
 flag1=dx, flag2=dy flag3=aperture_size, flag4=-1 and flag5=-1. The conversion of these flags to DSP_Flags is done using helper macro *FLAGS3_OpenCV2DSP(dx,dy,aperture_size)*
-
+-----
 ===API Prototype Defination===
 
 All the API prototype are defined in file *beagle_opencv_API.h*  The input arguments to the API are expected to be same as that of the Original OpenCV 2.1. This assures consistency with OpenCV and easy migration for users to DSP.
-
+-----
 ===API Defination and Implementation===
 
 The function defination is implemented in file *beagle_opencv_API.c*. 
@@ -69,7 +69,7 @@ This conversion is done using *DSP_Flags flags_OpenCV2DSP(int a, int b, int c, i
 
 Name of all rapper function start with OpenCV_DSP API name appened with *Process*. For example, rapper function for DSP_cvSobel() is named DSP_cvSobelProcess(). All rapper function are declared *int* type which returns error codes, either *OPENCVDSP_OK* or *OPENCVDSP_ERR*. These error codes are defined in file opencvDsp.h and can be extended as per user need. It is always wise to perform error checking when the function call returns.
 The input arguments to these functions are pointers to DSP_Mat types for source and destination matrices  and pointer to DSP_Flags for necessary flags to be passed. 
-
+-----
 ===Implementing Rapper Function That Calls C6accel library===
 
 Prototypes to all the rapper functions are defined in file *opencvDsp.h*. The name of the rapper function starts with OpenCV_DSP API name followed by *Process*. The function defination is implemented in *opencvDsp.c*. 
@@ -77,7 +77,7 @@ Prototypes to all the rapper functions are defined in file *opencvDsp.h*. The na
 As C6accel does not provide any buffer for scratch work on the DSP side, all the required buffer for scratch work or temporary storage should be allocated in the wrapper function defination. Their size should be saved for releasing the buffer when the processing is over. As DSP works on continious memroy address space, buffer allocation and deallocation should be done using *Memory_alloc()* and *Memory_free()*. However, their is no necessary to allocate buffer for source and destination matrices or images. It is expected that OpenCV allocates buffer in continious memory space. If not, you can patch your OpenCV using the patch provided in *patch/* folder which allows OpenCV to allocate memroy in continious region. If you don't want to change your OpenCV source, you then have to allocate buffer for source data and destination data and then copy your source data to this buffer.  
 
 It is assumed that your implementation for new Algorithm will provide support for both *Synchronou* and *Asynchronous* call to DSP. Care should be take when to free the buffers in the case of asynchronous call. Buffer should be freed only after DSP is synchronized in case of *Asynchronous* call. You can refer to DSP_cvSyncDSPProcess() for this. To implement support for Aynchronous and Asynchronous call *SUPPORT_ASYNC* flag is used and last argument to C6accel library is provided as either *SYNC* or *ASYNC* for synchronous and asynchronous call respectively. 
-
+-----
 ===Adding Support For Your Algorithm in C6accel Library===
 
 You can also refer to C6accel documentation for adding your algorithm to C6accel library. However I have tried to simplify the procedure and mentioned it below step-wise. The procedure is described using example of RGB_To_Y() used by DSP_cvCvtColor().
@@ -104,7 +104,7 @@ int C6accel_RGB_To_Y(C6accel_Handle hC6accel,
 #endif
 }}}
 
-====_Step 2_ (Adding Structure to store parameters to be passed to DSP)====
+====_Step 2_ (Adding Structure to Store parameters to Be Passed to DSP)====
 
 All structures to hold parameters are defined in file *iC6Accel_ti.h* in folder {C6accel_Base_Dir}/soc/packages/ti/c6accel and folder {C6accel_Base_Dir}/dsp/alg/include. To maintain consistency, you can add structure in file inside any of these folder and copy the same to other.
 
@@ -119,7 +119,7 @@ typedef struct IMG_RGB_To_Y_Params{
 
 Due to address translation issue between virtual address space in ARM and Physical address space in DSP, pointers are not directly passed to DSP. Pointers should either by address translated or stored in structure provided by Codec-Engine which are internally address translated. Due to this restriction buffer ID is created and passed to DSP while pointer to this buffer is stored in structure that is address translated by Codec-Engine framework.
 
-====_Step 3_ (Adding ID of New Algorithm)====
+====_Step 3_ (Adding ID for New Algorithm)====
 
 Algorithm ID is defined in file *iC6Accel_ti.h*. As described in step 2, consistency should be made in files in 2 different folders.
 As all functions are implemented in DSP, it is necessary to tell DSP, which function call is to be made for your algorithm. To do this, all algorithms are given ID based on C6accel convention. The convention used is
@@ -222,7 +222,7 @@ If SYNC call to DSP is to be made, you can directly call UNIVERSAL_process(). Fo
 status = UNIVERSAL_process(hC6accel->hUni, &inBufDesc, &outBufDesc, NULL,(UNIVERSAL_InArgs *)CInArgs, &uniOutArgs);
 }}}
 
-====_Step 6_ (Adding the DSP side algorithm)====
+====_Step 6_ (Adding DSP side algorithm)====
 
 Before implementing your algorithm, you should be aware that C6accel does not provide any scratch memory on DSP side, thus it is your responsibility to allocate continious scratch memory in ARM side and pass that to the DSP for use. To see how it is done, please refer to DSP_cvDFTProcess() implementation.
 
@@ -260,6 +260,6 @@ case (RGB_TO_Y_FXN_ID): {
 }}} 
 
 This is the method I prefer. The other method is to implement your algorithm inside the case statement, ie, after else inside the case statement.
-
+-----
 
 ===Note:- This completes the procedure to add new algorithms. After this is done, compile and test your algorithm. If you have any queries or suggestions, please feel free to leave a comment===
