@@ -4,7 +4,7 @@
 
 This page describes the complete procedure to add new algorithms to this library. This library will be called by name *OpenCV_DSP*.
 Also, a brief description on internal functions, necessary structures is provided.
-It is important to note that OpenCV_DSP is implemented on library [http:// *C6accel*] library. *C6accel* library was extended to provide support for *OpenCV_DSP* and new algorithm support was added to it. On documentation about *C6accel* you can click on this [http:// link]
+It is important to note that OpenCV_DSP is implemented on *C6accel* library. *C6accel* library was extended to provide support for *OpenCV_DSP* and new algorithm support was added to it. On documentation about *C6accel* you can see <PROJECT_BASE>/dsp_opencv/beagle/c6accel_1_00_00_04_async. c6accel is not yet released by TI. However, you can visit [ http://software-dl.ti.com/dsps/dsps_registered_sw/sdo_sb/targetcontent/index.html ] to track its release sometime later in 2010 september. 
 
 = Details =
 
