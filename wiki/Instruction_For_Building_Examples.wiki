@@ -65,12 +65,12 @@ Since, we need to change the source code, it is preferred that you configure the
 
   {{{ # }}} bitbake -f -c configure opencv
 
-  The above command will unpack and configure OpenCV 2.1 at *OE_BASE/build/tmp-angstrom_2008_1/work/armv7a-angstrom-linux-gnueabi/opencv-2.1.0+svnr3217-r1*. Lets call this *OPENCV_BASE*.
-  Note:- Name of folder opencv-2.1.0+svnr3217-r1 can vary depending svn revision. In this case the numbers after +svnr can be different.
+  The above command will unpack and configure OpenCV 2.1 at *{{{OE_BASE/build/tmp-angstrom_2008_1/work/armv7a-angstrom-linux-gnueabi/opencv-2.1.0+svnr3217-r1}}}*. Lets call this *OPENCV_BASE*.
+  Note:- Name of folder {{{opencv-2.1.0+svnr3217-r1}}} can vary depending svn revision. In this case the numbers after +svnr can be different.
 
-Now change directory to *OPENCV_BASE*.ie, OE_BASE/build/tmp-angstrom_2008_1/work/armv7a-angstrom-linux-gnueabi/opencv-2.1.0+svnr3217-r1 .
+Now change directory to *OPENCV_BASE*.ie, {{{OE_BASE/build/tmp-angstrom_2008_1/work/armv7a-angstrom-linux-gnueabi/opencv-2.1.0+svnr3217-r1}}} .
 
-  {{{ # }}} cd OE_BASE/build/tmp-angstrom_2008_1/work/armv7a-angstrom-linux-gnueabi/opencv-2.1.0+svnr3217-r1
+  {{{ # }}} cd {{{OE_BASE/build/tmp-angstrom_2008_1/work/armv7a-angstrom-linux-gnueabi/opencv-2.1.0+svnr3217-r1}}}
 
   Execute following commands to apply the patch
 
