@@ -104,9 +104,10 @@ To build the project, go the folder you had checkout the work. ie,
 
   {{{#}}}cd OE_BASE/opencv-dsp-acceleration/dsp_opencv
 
-Edit file Rules.make to point to the correct path for each tools.In most of the cases, only editing varialble *ROOTHPATH* is sufficient. If you have followed the method described in step 1 to install Codec-engine and tools, editing ROOTPATH is sufficient.
-
+Edit file Rules.make to point to the correct path for each tools.In most of the cases, only editing varialble *ROOTHPATH* is sufficient, if you have followed the method described in step 2 to install Codec-engine and tools. Also verify the path of cross-compiler in the variable *CROSS_COMPILE* to point to correct path.
 Also, it is advisable that you edit *EXEC_DIR* variable to point to the folder where you want all of the executables and test files generated. If you are using NFS, this path can also be the network shared folder.
+
+Now,
 
 Execute following to build the project
 
