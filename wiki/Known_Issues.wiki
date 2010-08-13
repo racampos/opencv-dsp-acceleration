@@ -1,0 +1,10 @@
+#summary This page describes the known issues up to date.
+
+= Introduction =
+
+For complete list of know issues, please click on the link below.
+
+=[http://code.google.com/p/opencv-dsp-acceleration/issues/list]=
+
+
+If you have come across any bug, you can use the same link to provide information to the owner.
