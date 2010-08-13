@@ -44,11 +44,13 @@ This API call is similar to *cvDFT()* API of OpenCV. Same restriction applies to
 
 ===_{{{void DSP_cvIntegral( const CvArr* image, CvArr* sumImage, CvArr* sumSqImage, CvArr* tiltedSumImage )}}}_===
 
+*Note*: To use this API you need to install VLIB. You can request VLIB from [http://www.ti.com/vlibrequest]. The library file must be saved to folder *dsp_opencv/beagle/c6accel_1_00_00_04_async/dsp/libs*. While building the project, you should remove the comment for VLIB in Makefile at *dsp_opencv/beagle/c6accel_1_00_00_04_async/dsp/alg/pjt*
+
 This API call is similar to *cvIntegral()* API of OpenCV. Same restriction applies to this API as that of cvIntegral(). Other added restriction are as follows.
 
   #1 The input image is single channel unsigned 8-bit image.
   #2 The output image is single channel 32-bit image with same number of columns and rows. 
-
+  #3 Currently this API does not implement square sum and tilted sum.
 
 ===_{{{void DSP_cvCvtColor( const CvArr* srcarr, CvArr* dstarr, int code )}}}_===
 
