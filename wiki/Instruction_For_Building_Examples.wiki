@@ -107,6 +107,26 @@ To build the project, go the folder you had checkout the work. ie,
 Edit file Rules.make to point to the correct path for each tools.In most of the cases, only editing varialble *ROOTHPATH* is sufficient, if you have followed the method described in step 2 to install Codec-engine and tools. Also verify the path of cross-compiler in the variable *CROSS_COMPILE* to point to correct path.
 Also, it is advisable that you edit *EXEC_DIR* variable to point to the folder where you want all of the executables and test files generated. If you are using NFS, this path can also be the network shared folder.
 
+*Note*: If you have VLIB and CXCORE library, you need to uncomment the line in file *Makefile* at *OE_BASE/opencv-dsp-acceleration/dsp_opencv/beagle/c6accel_1_00_00_04_async/dsp/alg/pjt. Which can be done as shown below.
+
+*Before*
+{{{
+# uncomment the lines below if you are using VLIB. The library file must be stored at [c6accel_Base_Dir]/dsp/libs
+#VLIB = -l"../../libs/vlib.l64p"
+
+# uncomment the lines below if you are using CXCORE. The library file must be stored at [c6accel_Base_Dir]/dsp/libs
+#CXCORE = -l"../../libs/cxcore.lib"
+}}}
+
+*After*
+{{{
+# uncomment the lines below if you are using VLIB. The library file must be stored at [c6accel_Base_Dir]/dsp/libs
+VLIB = -l"../../libs/vlib.l64p"
+
+# uncomment the lines below if you are using CXCORE. The library file must be stored at [c6accel_Base_Dir]/dsp/libs
+CXCORE = -l"../../libs/cxcore.lib"
+}}}
+
 Now,
 
 Execute following to build the project
