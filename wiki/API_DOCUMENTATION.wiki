@@ -35,12 +35,11 @@ This API call is similar to *cvSobel()* API of OpenCV. Same restriction applies 
 
 ===_{{{void DSP_cvDFT( const CvArr* srcarr, CvArr* dstarr, int flags, int nonzero_rows )}}}_===
 
-This API call is similar to *cvDFT()* API of OpenCV. Same restriction applies to this API as that of cvDFT(). Other added restriction are as follows.
+*Note*: To use this API you need to have *cxcore.lib* compiled for c64x+.
+This API call is similar to *cvDFT()* API of OpenCV. Same restriction applies to this API as that of cvDFT() since it uses *cxcore* library compiled for C64x+. However, following restriction apply to it currently.
 
-  #1 Size of rows and columns should be power of 2.
-  #2 Minimum number of rows or columns can either be 1, 16 or greater.
-  #3 Input and output matrix or image should be 2 channel floating point. 
-  #4 The output data need to be scaled. 
+  # Currently the size of DFT should not be power of 2. 
+
 
 ===_{{{void DSP_cvIntegral( const CvArr* image, CvArr* sumImage, CvArr* sumSqImage, CvArr* tiltedSumImage )}}}_===
 
