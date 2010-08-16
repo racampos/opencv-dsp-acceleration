@@ -149,7 +149,7 @@ Function ID should be added in file {{{C6Accel.h}}} defined in folder {{{{C6acce
 
 Calls to the DSP algorithms are done using wrapper function that uses UNIVERSAL_Process(), a Codec-Engine frame work implementation for non-VISA type codec. This function defination is done in file *c6accelw.c* provided inside folder {{{{C6accel_Base_Dir}}}}/soc/c6accelw .
 
-Input and output buffers are passed using *{{{XDM1_BufDesc}}}* structure. All parameters and function ID are passed using *{{{IC6Accel_InArgs}}}*. Continious buffer should be allocated for IC6Accel_InArgs. The size of this buffer is calculated, in our example, as follows
+Input and output buffers are passed using *{{{XDM1_BufDesc}}}* structure. All parameters and function ID are passed using *{{{IC6Accel_InArgs}}}*. Continious buffer should be allocated for {{{IC6Accel_InArgs}}}. The size of this buffer is calculated, in our example, as follows
 {{{
 InArg_Buf_size=  sizeof(Fxn_struct)+
 
